@@ -1,3 +1,5 @@
+var time = require('cate/core/time')
+
 var Minion = module.exports = function(options){
   this.init(options)
 }
@@ -7,10 +9,16 @@ var proto = Minion.prototype
 proto.init = function(options){
   options = options || {}
   this.energy = options.energy || 100
-  this.lastTick = options.lastTick || +new Date()
+  this.satiety = options.satiety || 100
+  this.lastTick = options.lastTick || Date.now()
 }
 
-proto.tick = function(time){
-  this.energy = 0
-  this.lastTick = time
+proto.tickTo = function(targetTime){
+  if(targetTime <= this.lastTick){
+    return
+  }
+
+  var diff = targetTime - this.lastTick
+  this.energy -= diff / time.hour(1) * 100
+  this.lastTick = targetTime
 }

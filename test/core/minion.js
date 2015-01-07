@@ -12,20 +12,38 @@ describe('Minion', function(){
     expect(this.minion.energy).to.equal(100)
   })
 
-  describe('#tick', function(){
+  describe('#tickTo', function(){
     beforeEach(function(){
       this.now = this.minion.lastTick
     })
 
+    it('ignores if targetTime is < lastTime', function(){
+      this.minion.tickTo(this.now - 1)
+      expect(this.minion.lastTick).to.equal(this.now)
+    })
+
     it('sets lastTick', function(){
       var newTime = this.now + 92085
-      this.minion.tick(newTime)
+      this.minion.tickTo(newTime)
       expect(this.minion.lastTick).to.equal(newTime)
     })
 
-    it('removes all energy after an hour', function(){
-      this.minion.tick(this.now + time.hour(1))
-      expect(this.minion.energy).to.equal(0)
+    describe('energy', function(){
+      it('removes all energy every hour', function(){
+        var next = this.now + time.hour(1)
+        this.minion.tickTo(next)
+        expect(this.minion.energy).to.equal(0)
+      })
+
+      it('removes half energy every 30 minutes', function(){
+        var next = this.now + time.min(30)
+        this.minion.tickTo(next)
+        expect(this.minion.energy).to.equal(50)
+
+        next += time.min(30)
+        this.minion.tickTo(next)
+        expect(this.minion.energy).to.equal(0)
+      })
     })
   })
 })
