@@ -20,5 +20,6 @@ proto.tickTo = function(targetTime){
 
   var diff = targetTime - this.lastTick
   this.energy -= diff / time.hour(1) * 100
+  this.satiety -= diff / time.min(15) * 100
   this.lastTick = targetTime
 }

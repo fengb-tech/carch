@@ -29,9 +29,12 @@ describe('Minion', function(){
     })
 
     describe('energy', function(){
+      it('starts at 100', function(){
+        expect(this.minion.energy).to.equal(100)
+      })
+
       it('removes all energy every hour', function(){
-        var next = this.now + time.hour(1)
-        this.minion.tickTo(next)
+        this.minion.tickTo(this.now + time.hour(1))
         expect(this.minion.energy).to.equal(0)
       })
 
@@ -43,6 +46,27 @@ describe('Minion', function(){
         next += time.min(30)
         this.minion.tickTo(next)
         expect(this.minion.energy).to.equal(0)
+      })
+    })
+
+    describe('satiety', function(){
+      it('starts at 100', function(){
+        expect(this.minion.satiety).to.equal(100)
+      })
+
+      it('removes all satiety every 15 minutes', function(){
+        this.minion.tickTo(this.now + time.min(15))
+        expect(this.minion.satiety).to.equal(0)
+      })
+
+      it('removes half satiety every 7.5 minutes', function(){
+        var next = this.now + time.min(7.5)
+        this.minion.tickTo(next)
+        expect(this.minion.satiety).to.equal(50)
+
+        next += time.min(7.5)
+        this.minion.tickTo(next)
+        expect(this.minion.satiety).to.equal(0)
       })
     })
   })
