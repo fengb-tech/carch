@@ -1,8 +1,11 @@
 var express = require('express')
 var app = express()
 
+app.set('view engine', 'jade')
+app.locals.basedir = app.get('views')
+
 app.get('/', function (req, res) {
-  res.send('Hello World!')
+  res.render('home')
 })
 
 var port = Number(process.env.PORT || 5000)
