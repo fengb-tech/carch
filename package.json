@@ -9,6 +9,7 @@
   "author": "FENGB TECH LLC",
   "license": "MIT",
   "dependencies": {
+    "browserify-middleware": "^4.1.0",
     "express": "^4.10.7",
     "jade": "^1.8.2"
   }
