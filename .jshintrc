@@ -1,5 +1,7 @@
 {
-  "browser": false,
+  "asi": true,
+  "browser": true,
   "node": true,
-  "asi": true
+  "mocha": true,
+  "undef": true
 }

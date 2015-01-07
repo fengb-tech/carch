@@ -1,6 +1,7 @@
 var expect = require('chai').expect
 
 var Minion = require('cate/core/minion')
+var time = require('cate/core/time')
 
 describe('Minion', function(){
   beforeEach(function(){
@@ -22,8 +23,8 @@ describe('Minion', function(){
       expect(this.minion.lastTick).to.equal(newTime)
     })
 
-    it('removes all energy within an hour', function(){
-      this.minion.tick(this.now + 1000)
+    it('removes all energy after an hour', function(){
+      this.minion.tick(this.now + time.hour(1))
       expect(this.minion.energy).to.equal(0)
     })
   })
