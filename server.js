@@ -9,9 +9,9 @@ app.get('/', function(req, res){
   res.render('home')
 })
 
-app.get('/game.js', browserify('./browser/game.js'))
+app.get('/cate.js', browserify('./browser/cate.js'))
 
 var port = Number(process.env.PORT || 5000)
 var server = app.listen(port, function (){
-  console.log('GRU started on', port)
+  console.log('CATE started on', port)
 })
