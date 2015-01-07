@@ -3,7 +3,13 @@ var jshint = require('gulp-jshint')
 var mocha = require('gulp-mocha')
 
 gulp.task('lint', function(){
-  return gulp.src(['*.js', '*.json'])
+  return gulp.src([
+             '*.js', '*.json',
+             'browser/**/*.js',
+             'core/**/*.js',
+             'server/**/*.js',
+             'test/**/*.js',
+           ])
            .pipe(jshint())
            .pipe(jshint.reporter('default'))
 })
