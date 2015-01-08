@@ -6,7 +6,7 @@ app.set('view engine', 'jade')
 app.locals.basedir = app.get('views')
 
 app.get('/', function(req, res){
-  res.render('home')
+  res.render('carch')
 })
 
 app.get('/carch.js', browserify('browser/carch.js'))
