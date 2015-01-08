@@ -10,7 +10,12 @@ var paths = {
     'server/**/*.js',
     'test/**/*.js',
   ],
-  mocha: 'test/**/*.js',
+
+  mocha: [
+    'core/**/*.js',
+    'server/**/*.js',
+    'test/**/*.js',
+  ],
 }
 
 gulp.task('lint', function(){
@@ -24,7 +29,7 @@ gulp.task('watch-lint', function(){
 })
 
 gulp.task('mocha', function(){
-  return gulp.src('test/**/*.js')
+  return gulp.src(paths.mocha)
            .pipe(mocha())
 })
 
