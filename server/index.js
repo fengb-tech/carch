@@ -9,4 +9,4 @@ app.get('/', function(req, res){
   res.render('home')
 })
 
-app.get('/cate.js', browserify('browser/cate.js'))
+app.get('/carch.js', browserify('browser/carch.js'))

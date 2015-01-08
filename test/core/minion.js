@@ -1,7 +1,7 @@
 var expect = require('chai').expect
 
-var Minion = require('cate/core/minion')
-var time = require('cate/core/time')
+var Minion = require('carch/core/minion')
+var time = require('carch/core/time')
 
 describe('Minion', function(){
   beforeEach(function(){

@@ -1,4 +1,4 @@
-var time = require('cate/core/time')
+var time = require('carch/core/time')
 
 var Minion = module.exports = function(options){
   this.init(options)
