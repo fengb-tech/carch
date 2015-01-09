@@ -6,7 +6,7 @@ var time = require(appRoot + '/core/time')
 
 describe('Minion', function(){
   beforeEach(function(){
-    this.minion = new Minion()
+    this.minion = Minion.create()
   })
 
   it('starts with 100 energy', function(){
