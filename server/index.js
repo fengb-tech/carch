@@ -1,4 +1,5 @@
 var appRoot = require('app-root-path')
+
 var express = require('express')
 var browserify = require('browserify-middleware')
 var app = module.exports = express()
@@ -10,6 +11,6 @@ app.get('/', function(req, res){
   res.render('carch')
 })
 
-app.get('/carch.js', browserify('browser/carch.js'))
+app.get('/carch.js', browserify(appRoot + '/browser/carch.js'))
 
 app.use(express.static(appRoot + '/public'))
