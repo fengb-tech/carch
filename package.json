@@ -2,12 +2,21 @@
   "name": "carch",
   "version": "0.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "gulp test"
-  },
   "author": "FENGB TECH LLC",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fengb-tech/carch"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "gulp test"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "2.1.x"
+  },
   "dependencies": {
     "app-root-path": "^1.0.0",
     "autoprefixer-stylus": "^0.4.0",
