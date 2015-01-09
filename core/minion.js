@@ -1,4 +1,6 @@
-var time = require('carch/core/time')
+var appRoot = require('app-root-path')
+
+var time = require(appRoot + '/core/time')
 
 var Minion = module.exports = function(options){
   this.init(options)
