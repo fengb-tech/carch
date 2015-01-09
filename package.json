@@ -14,7 +14,9 @@
     "express": "^4.10.7",
     "jade": "^1.8.2",
     "lodash": "^2.4.1",
-    "pixi": "^0.2.1"
+    "pixi": "^0.2.1",
+    "stylish": "^0.5.0",
+    "stylus": "^0.49.3"
   },
   "devDependencies": {
     "chai": "^1.10.0",
