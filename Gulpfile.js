@@ -28,7 +28,7 @@ gulp.task('watch-lint', function(){
   gulp.watch(paths.lint, ['lint'])
 })
 
-gulp.task('mocha', function(){
+gulp.task('mocha', ['lint'], function(){
   return gulp.src(paths.mocha)
            .pipe(mocha())
 })
