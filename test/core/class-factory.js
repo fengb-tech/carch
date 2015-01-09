@@ -6,7 +6,7 @@ var classFactory = require(appRoot + '/core/class-factory')
 describe('classFactory', function(){
   describe('naming', function(){
     beforeEach(function(){
-      this.Class = classFactory('Foo', function(){})
+      this.Class = classFactory(function Foo(){})
     })
 
     it('returns correct #name', function(){
@@ -29,7 +29,7 @@ describe('classFactory', function(){
 
   describe('callback', function(){
     it('passes prototype as argument', function(){
-      var Class = classFactory('Foo', function(proto){
+      var Class = classFactory(function Foo(proto){
         proto.foo = 'bar'
       })
 
@@ -37,7 +37,7 @@ describe('classFactory', function(){
     })
 
     it('passes the class as "this"', function(){
-      var Class = classFactory('Foo', function(proto){
+      var Class = classFactory(function Foo(proto){
         this.foo = 'bar'
       })
 

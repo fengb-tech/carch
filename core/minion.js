@@ -3,7 +3,7 @@ var appRoot = require('app-root-path')
 var classFactory = require(appRoot + '/core/class-factory')
 var time = require(appRoot + '/core/time')
 
-var Minion = module.exports = classFactory('Minion', function(proto){
+module.exports = classFactory(function Minion(proto){
   proto.init = function(options){
     options = options || {}
     this.energy = options.energy || 100

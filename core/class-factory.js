@@ -10,13 +10,16 @@ function nextFid(){
   return fid++
 }
 
-var factory = module.exports = function(name, callback){
-  var Class = namedFunc(name, function(options){
+var classFactory = module.exports = function(callback){
+  var Class = function(options){
     this._assignFid()
     if(this.init){
       this.init(options)
     }
-  })
+  }
+  if(callback.name){
+    Class = namedFunc(callback.name, Class)
+  }
 
   Class.create = function(options){
     return new Class(options)
