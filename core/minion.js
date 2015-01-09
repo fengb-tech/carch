@@ -1,7 +1,5 @@
-var appRoot = require('app-root-path')
-
-var classFactory = require(appRoot + '/core/class-factory')
-var time = require(appRoot + '/core/time')
+var classFactory = require('carch/core/class-factory')
+var time = require('carch/core/time')
 
 module.exports = classFactory(function Minion(proto){
   proto.init = function(options){

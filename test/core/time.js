@@ -1,7 +1,6 @@
-var appRoot = require('app-root-path')
 var expect = require('chai').expect
 
-var time = require(appRoot + '/core/time')
+var time = require('carch/core/time')
 
 describe('time()', function(){
   it('.ms() has correct offset', function(){

@@ -1,6 +1,4 @@
-var appRoot = require('app-root-path')
-
-var server = require(appRoot + '/server')
+var server = require('carch/server')
 
 var port = Number(process.env.PORT || 5000)
 server.listen(port, function(){

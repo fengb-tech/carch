@@ -1,7 +1,6 @@
-var appRoot = require('app-root-path')
 var expect = require('chai').expect
 
-var classFactory = require(appRoot + '/core/class-factory')
+var classFactory = require('carch/core/class-factory')
 
 describe('classFactory', function(){
   describe('naming', function(){

@@ -1,9 +1,9 @@
-var appRoot = require('app-root-path')
-
 var express = require('express')
 var stylish = require('stylish')
 var autoprefixer = require('autoprefixer-stylus')
-var render = require(appRoot + '/server/render')
+var appRoot = require('app-root-path')
+
+var render = require('carch/server/render')
 
 var app = module.exports = express()
 

@@ -1,8 +1,7 @@
-var appRoot = require('app-root-path')
 var expect = require('chai').expect
 
-var Minion = require(appRoot + '/core/minion')
-var time = require(appRoot + '/core/time')
+var Minion = require('carch/core/minion')
+var time = require('carch/core/time')
 
 describe('Minion', function(){
   beforeEach(function(){
