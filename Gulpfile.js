@@ -32,7 +32,7 @@ gulp.task('watch-lint', function(){
 
 gulp.task('mocha', ['lint'], function(){
   return gulp.src(paths.mocha)
-           .pipe(mocha())
+           .pipe(mocha({ reporter: 'dot' }))
 })
 
 gulp.task('watch-mocha', function(){
