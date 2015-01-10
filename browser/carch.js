@@ -1,5 +1,8 @@
+/* globals document, window, performance */
 var PIXI = require('pixi')
 var _ = require('lodash')
+
+var time = require('carch/util/time')
 
 var demo = require('carch/browser/demo')
 
@@ -15,8 +18,22 @@ parentDom.addEventListener('resize', _.debounce(function(){
 }, 200))
 
 var hideoutView = demo.hideoutView()
-requestAnimationFrame(function mainLoop(){
-  hideoutView.update()
-  renderer.render(hideoutView.stage)
-  requestAnimationFrame(mainLoop)
+requestAnimationFrame(function(testTimestamp){
+  var gameloop
+  if(testTimestamp < 1e12){
+    gameloop = function(hrTimestamp){
+      // DOMHighResTimeStamp = milliseconds since page load, not UNIX EPOCH
+      var timestamp = time.loadTime + hrTimestamp
+      hideoutView.tickTo(timestamp)
+      renderer.render(hideoutView.stage)
+      requestAnimationFrame(gameloop)
+    }
+  } else {
+    gameloop = function(timestamp){
+      hideoutView.tickTo(timestamp)
+      renderer.render(hideoutView.stage)
+      requestAnimationFrame(gameloop)
+    }
+  }
+  requestAnimationFrame(gameloop)
 })

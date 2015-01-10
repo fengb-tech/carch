@@ -31,6 +31,6 @@ module.exports = classFactory(function Hideout(proto){
     minion.emit('move', minion, fromCoord, toCoord)
   }
 
-  proto.tick = function(){
+  proto.tickTo = function(){
   }
 })
