@@ -57,6 +57,6 @@ module.exports = classFactory(function MinionView(proto){
   }
 
   proto.displayCoord = function(coord){
-    return [coord[0] * 16, coord[1] * 16]
+    return [coord[0] * 16 + 320, coord[1] * 16 + 320]
   }
 })
