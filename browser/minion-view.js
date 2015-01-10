@@ -13,11 +13,19 @@ module.exports = classFactory(function MinionView(proto){
     options = options || {}
     this.minion = options.minion
     this.sprite = new PIXI.Sprite(texture())
-    this.sprite.x = options.coord[0]
-    this.sprite.y = options.coord[1]
+    this.sprite.position.x = options.coord[0]
+    this.sprite.position.y = options.coord[1]
+
+    this.minion.on('move', _.bind(this.onMove, this))
   }
 
   proto.update = function(){
     this.hideout.tick(Date.now())
+  }
+
+  proto.onMove = function(minion, fromCoord, toCoord){
+    console.log('moved!', toCoord)
+    this.sprite.position.x = toCoord[0]
+    this.sprite.position.y = toCoord[1]
   }
 })
