@@ -3,11 +3,11 @@ var expect = require('chai').expect
 var classFactory = require('carch/core/class-factory')
 
 describe('classFactory', function(){
-  describe('naming', function(){
-    beforeEach(function(){
-      this.Class = classFactory(function Foo(){})
-    })
+  beforeEach(function(){
+    this.Class = classFactory(function Foo(){})
+  })
 
+  describe('naming', function(){
     it('returns correct #name', function(){
       expect(this.Class.name).to.equal('Foo')
     })
@@ -41,6 +41,30 @@ describe('classFactory', function(){
       })
 
       expect(Class.foo).to.equal('bar')
+    })
+  })
+
+  describe('.inherits', function(){
+    beforeEach(function(){
+      this.Super = function(){
+        this.superInitted = true
+      }
+      this.Super.prototype = { superProtod: true }
+      this.Class.inherits(this.Super)
+    })
+
+    it('adds Super to .supers', function(){
+      expect(this.Class.supers).to.include(this.Super)
+    })
+
+    it('adds Super.prototype methods', function(){
+      var instance = new this.Class()
+      expect(instance.superProtod).to.equal(true)
+    })
+
+    it('invokes Super()', function(){
+      var instance = new this.Class()
+      expect(instance.superInitted).to.equal(true)
     })
   })
 })
