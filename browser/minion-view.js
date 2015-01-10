@@ -24,7 +24,6 @@ module.exports = classFactory(function MinionView(proto){
   }
 
   proto.onMove = function(minion, fromCoord, toCoord){
-    console.log('moved!', toCoord)
     this.sprite.position.x = toCoord[0]
     this.sprite.position.y = toCoord[1]
   }
