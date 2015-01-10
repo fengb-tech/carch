@@ -3,6 +3,16 @@ var expect = require('chai').expect
 var time = require('carch/util/time')
 
 describe('time()', function(){
+  describe('.timestamp()', function(){
+    it('is within 1ms of Date.now()', function(){
+      expect(time.timestamp()).to.be.closeTo(Date.now(), 1)
+    })
+
+    it('is more precise than Date.now()', function(){
+      expect(time.timestamp()).to.not.equal(Date.now())
+    })
+  })
+
   it('.ms() has correct offset', function(){
     expect(time.ms(1)).to.equal(1)
   })
