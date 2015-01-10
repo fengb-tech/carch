@@ -18,8 +18,8 @@ module.exports = classFactory(function HideoutView(proto){
     this.hideout.on('addMinion', _.bind(this.onAddMinion, this))
   }
 
-  proto.update = function(){
-    this.hideout.tick(Date.now())
+  proto.tickTo = function(targetTime){
+    this.hideout.tickTo(targetTime)
   }
 
   proto.onAddMinion = function(hideout, minion, coord){

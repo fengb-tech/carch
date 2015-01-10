@@ -20,8 +20,8 @@ module.exports = classFactory(function MinionView(proto){
     this.minion.on('move', _.bind(this.onMove, this))
   }
 
-  proto.update = function(){
-    this.hideout.tick(Date.now())
+  proto.tickTo = function(targetTime){
+    this.minion.tickTo(targetTime)
   }
 
   proto.onMove = function(minion, fromCoord, toCoord){

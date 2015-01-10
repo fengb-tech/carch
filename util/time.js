@@ -16,6 +16,8 @@ var time = module.exports = function(options){
   return val
 }
 
+time.now = Date.now
+
 time.ms = function(ms){
   return ms
 }
