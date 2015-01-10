@@ -19,7 +19,9 @@ module.exports = classFactory(function HideoutView(proto){
   }
 
   proto.tickTo = function(targetTime){
-    this.hideout.tickTo(targetTime)
+    for(var i=0; i < this.subviews.length; i++){
+      this.subviews[i].tickTo(targetTime)
+    }
   }
 
   proto.onAddMinion = function(hideout, minion, coord){
