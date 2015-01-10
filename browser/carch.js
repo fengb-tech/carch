@@ -8,13 +8,10 @@ var demo = require('carch/browser/demo')
 
 var dom = document.getElementById('carch')
 var parentDom = dom.parentElement
-if(parentDom == document.body) {
-  parentDom = window
-}
-var renderer = PIXI.autoDetectRenderer(parentDom.width || parentDom.innerWidth, parentDom.height || parentDom.innerHeight, dom)
+var renderer = PIXI.autoDetectRenderer(parentDom.clientWidth, parentDom.clientHeight, dom)
 
-parentDom.addEventListener('resize', _.debounce(function(){
-  renderer.resize(parentDom.width || parentDom.innerWidth, parentDom.height || parentDom.innerHeight)
+window.addEventListener('resize', _.debounce(function(){
+  renderer.resize(parentDom.clientWidth, parentDom.clientHeight)
 }, 200))
 
 var hideoutView = demo.hideoutView()
@@ -37,3 +34,20 @@ requestAnimationFrame(function(testTimestamp){
   }
   requestAnimationFrame(gameloop)
 })
+
+var fpsDisplay = document.getElementById('fps')
+if(fpsDisplay){
+  requestAnimationFrame(function(start){
+    var then = start
+    var frames = 0
+    requestAnimationFrame(function fpsLoop(now){
+      frames++
+      if(now - then >= 1000){
+        fpsDisplay.innerText = frames + ' fps'
+        frames = 0
+        then = now
+      }
+      requestAnimationFrame(fpsLoop)
+    })
+  })
+}
