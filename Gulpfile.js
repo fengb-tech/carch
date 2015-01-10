@@ -7,12 +7,14 @@ var paths = {
     '*.js', '*.json',
     'browser/**/*.js',
     'core/**/*.js',
+    'util/**/*.js',
     'server/**/*.js',
     'test/**/*.js',
   ],
 
   mocha: [
     'core/**/*.js',
+    'util/**/*.js',
     'server/**/*.js',
     'test/**/*.js',
   ],

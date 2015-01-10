@@ -1,10 +1,11 @@
 var PIXI = require('pixi')
 var _ = require('lodash')
 
+var classFactory = require('carch/util/class-factory')
+
 var MinionView = require('carch/browser/minion-view')
 var colors = require('carch/browser/colors')
 
-var classFactory = require('carch/core/class-factory')
 var Hideout = require('carch/core/hideout')
 
 module.exports = classFactory(function HideoutView(proto){

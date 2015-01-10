@@ -1,7 +1,8 @@
 var util = require('util')
 var events = require('events')
 
-var classFactory = require('carch/core/class-factory')
+var classFactory = require('carch/util/class-factory')
+
 var Minion = require('carch/core/minion')
 
 module.exports = classFactory(function Hideout(proto){

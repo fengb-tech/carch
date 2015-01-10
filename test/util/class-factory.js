@@ -1,6 +1,6 @@
 var expect = require('chai').expect
 
-var classFactory = require('carch/core/class-factory')
+var classFactory = require('carch/util/class-factory')
 
 describe('classFactory', function(){
   beforeEach(function(){

@@ -1,7 +1,8 @@
 var expect = require('chai').expect
 
+var time = require('carch/util/time')
+
 var Minion = require('carch/core/minion')
-var time = require('carch/core/time')
 
 describe('Minion', function(){
   beforeEach(function(){

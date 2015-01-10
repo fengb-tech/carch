@@ -1,6 +1,6 @@
 var expect = require('chai').expect
 
-var time = require('carch/core/time')
+var time = require('carch/util/time')
 
 describe('time()', function(){
   it('.ms() has correct offset', function(){

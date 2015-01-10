@@ -1,7 +1,8 @@
 var PIXI = require('pixi')
 var _ = require('lodash')
 
-var classFactory = require('carch/core/class-factory')
+var classFactory = require('carch/util/class-factory')
+
 var Minion = require('carch/core/minion')
 
 var texture = _.once(function(){
