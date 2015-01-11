@@ -27,26 +27,22 @@ module.exports = classFactory(function MinionView(proto){
     this.minion.on('move', _.bind(this.onMove, this))
   }
 
-  proto.tickTo = function(targetTime){
-    if(this._tickDisplayCoord){
-      this._tickDisplayCoord(targetTime)
-    }
-  }
+  proto.tickTo = _.noop
 
   proto.onMove = function(minion, fromCoord, toCoord){
+    var fromDisplayCoord = this.displayCoord(fromCoord)
+    var toDisplayCoord = this.displayCoord(toCoord)
+
     var startMoveTime = time.timestamp()
     var totalDiffTime = time.sec(0.5)
     var endMoveTime = startMoveTime + totalDiffTime
 
-    var fromDisplayCoord = this.displayCoord(fromCoord)
-    var toDisplayCoord = this.displayCoord(toCoord)
-
     this.tickManager.add(this)
-    this._tickDisplayCoord = function(targetTime){
+    this.tickTo = function(targetTime){
       if(targetTime >= endMoveTime){
         this.sprite.position.x = toDisplayCoord[0]
         this.sprite.position.y = toDisplayCoord[1]
-        delete this._tickDisplayCoord
+        this.tickTo = _.noop
         this.tickManager.remove(this)
         return
       }

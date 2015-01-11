@@ -14,25 +14,8 @@ window.addEventListener('resize', _.debounce(function(){
   renderer.resize(parentDom.clientWidth, parentDom.clientHeight)
 }, 200))
 
-var hideoutView = demo.hideoutView()
-requestAnimationFrame(function(testTimestamp){
-  if(testTimestamp < 1e12){
-    // DOMHighResTimeStamp = milliseconds since page load, not UNIX EPOCH
-    var base = Date.now() - testTimestamp
-    requestAnimationFrame(function gameLoop(hrTimestamp){
-      var timestamp = base + hrTimestamp
-      hideoutView.tickTo(timestamp)
-      renderer.render(hideoutView.stage)
-      requestAnimationFrame(gameLoop)
-    })
-  } else {
-    requestAnimationFrame(function gameLoop(timestamp){
-      hideoutView.tickTo(timestamp)
-      renderer.render(hideoutView.stage)
-      requestAnimationFrame(gameLoop)
-    })
-  }
-})
+var game = demo.game()
+game.loop(renderer)
 
 var fpsDisplay = document.getElementById('fps')
 if(fpsDisplay){

@@ -1,9 +1,10 @@
 var Hideout = require('carch/core/hideout')
-var HideoutView = require('carch/browser/hideout-view')
 
-exports.hideoutView = function(){
+var Game = require('carch/browser/game')
+
+exports.game = function(){
   var hideout = Hideout.create({ width: 20, height: 10 })
-  var hideoutView = HideoutView.create({ hideout: hideout })
+  var game = Game.create({ hideout: hideout })
   var minion = hideout.addMinion()
   function randomWalk(){
     var rand = Math.random()
@@ -25,5 +26,5 @@ exports.hideoutView = function(){
     }
   }
   setInterval(randomWalk, 700)
-  return hideoutView
+  return game
 }

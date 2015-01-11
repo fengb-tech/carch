@@ -1,1 +1,1 @@
-exports.darkBrown = 0x302000
+exports.DARK_BROWN = 0x302000
