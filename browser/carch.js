@@ -1,4 +1,4 @@
-/* globals document, window, performance */
+/* globals document, window */
 var PIXI = require('pixi')
 var _ = require('lodash')
 

@@ -12,7 +12,7 @@ module.exports = classFactory(function Minion(proto){
     options = options || {}
     this.energy = options.energy || 100
     this.satiety = options.satiety || 100
-    this.lastTick = options.lastTick || time.timestamp()
+    this.lastTick = options.lastTick || time.now()
   }
 
   proto.tickTo = function(targetTime){

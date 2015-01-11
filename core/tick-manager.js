@@ -5,7 +5,7 @@ module.exports = classFactory(function TickManager(proto){
   proto.init = function(options){
     options = options || {}
 
-    this.lastTickAt = options.lastTickAt || time.timestamp()
+    this.lastTickAt = options.lastTickAt || time.now()
     this._tickers = {}
   }
 

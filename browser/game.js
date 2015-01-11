@@ -1,9 +1,12 @@
+/* globals performance */
+
 var PIXI = require('pixi')
 
 var colors = require('carch/browser/colors')
 var HideoutView = require('carch/browser/hideout-view')
 
 var classFactory = require('carch/util/class-factory')
+var time = require('carch/util/time')
 
 var Hideout = require('carch/core/hideout')
 var TickManager = require('carch/core/tick-manager')
@@ -32,13 +35,21 @@ module.exports = classFactory(function Game(proto){
     requestAnimationFrame(function(testTimestamp){
       if(testTimestamp < 1e12){
         // DOMHighResTimeStamp = milliseconds since page load, not UNIX EPOCH
-        var base = Date.now() - testTimestamp
-        requestAnimationFrame(function gameLoop(hrTimestamp){
-          var timestamp = base + hrTimestamp
-          self.tickTo(timestamp)
-          renderer.render(self.stage)
-          requestAnimationFrame(gameLoop)
-        })
+        if(performance.timing && performance.timing.navigationStart){
+          var base = performance.timing.navigationStart
+          requestAnimationFrame(function gameLoop(hrTimestamp){
+            self.tickTo(base + hrTimestamp)
+            renderer.render(self.stage)
+            requestAnimationFrame(gameLoop)
+          })
+        } else {
+          requestAnimationFrame(function gameLoop(){
+            // Don't use default argument since we don't have a good baseline
+            self.tickTo(time.now())
+            renderer.render(self.stage)
+            requestAnimationFrame(gameLoop)
+          })
+        }
       } else {
         requestAnimationFrame(function gameLoop(timestamp){
           self.tickTo(timestamp)

@@ -33,7 +33,7 @@ module.exports = classFactory(function MinionView(proto){
     var fromDisplayCoord = this.displayCoord(fromCoord)
     var toDisplayCoord = this.displayCoord(toCoord)
 
-    var startMoveTime = time.timestamp()
+    var startMoveTime = time.now()
     var totalDiffTime = time.sec(0.5)
     var endMoveTime = startMoveTime + totalDiffTime
 
