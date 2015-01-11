@@ -1,5 +1,5 @@
-var PIXI = require('pixi')
 var _ = require('lodash')
+var PIXI = require('pixi')
 
 var classFactory = require('carch/util/class-factory')
 
@@ -26,10 +26,16 @@ module.exports = classFactory(function HideoutView(proto){
 
   proto.onAddMinion = function(hideout, minion, coord){
     var minionView = MinionView.create({
+      displayCoord: _.bind(this.displayCoord, this),
       minion: minion,
       coord: coord,
     })
     this.stage.addChild(minionView.sprite)
     this.subviews.push(minionView)
+  }
+
+  proto.displayCoord = function(coord){
+    return [(coord[0] + this.hideout.dirWidth) * 64,
+            (coord[1] + this.hideout.dirHeight) * 64]
   }
 })

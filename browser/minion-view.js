@@ -13,6 +13,8 @@ var texture = _.once(function(){
 module.exports = classFactory(function MinionView(proto){
   proto.init = function(options){
     options = options || {}
+
+    this.displayCoord = options.displayCoord
     this.minion = options.minion
     this.sprite = new PIXI.Sprite(texture())
     if(options.coord){
@@ -32,7 +34,7 @@ module.exports = classFactory(function MinionView(proto){
 
   proto.onMove = function(minion, fromCoord, toCoord){
     var startMoveTime = time.timestamp()
-    var totalDiffTime = time.sec(1)
+    var totalDiffTime = time.sec(0.5)
     var endMoveTime = startMoveTime + totalDiffTime
 
     var fromDisplayCoord = this.displayCoord(fromCoord)
@@ -54,9 +56,5 @@ module.exports = classFactory(function MinionView(proto){
   proto.lerp = function(from, to, percent){
     var diff = to - from
     return from + diff * percent
-  }
-
-  proto.displayCoord = function(coord){
-    return [coord[0] * 16 + 320, coord[1] * 16 + 320]
   }
 })

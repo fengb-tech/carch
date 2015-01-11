@@ -7,7 +7,7 @@ var Minion = require('carch/core/minion')
 
 describe('Hideout', function(){
   beforeEach(function(){
-    this.hideout = Hideout.create()
+    this.hideout = Hideout.create({ width: 10, height: 10 })
     this.spy = sinon.spy()
   })
 
@@ -36,13 +36,13 @@ describe('Hideout', function(){
     })
 
     it('moves the minion', function(){
-      var newCoord = [10, 10]
+      var newCoord = [2, 3]
       this.hideout.moveMinion(this.minion, newCoord)
       expect(this.hideout.coordOfMinion[this.minion]).to.equal(newCoord)
     })
 
     it('emits "move" event on minion', function(){
-      var newCoord = [10, 10]
+      var newCoord = [3, 2]
       this.minion.on('move', this.spy)
       this.hideout.moveMinion(this.minion, newCoord)
       expect(this.spy).to.have.been.calledWith(this.minion, this.startCoord, newCoord)
