@@ -1,6 +1,11 @@
+var _ = require('lodash')
+
 var fs = require('fs')
 var markdown = require('marked')
 var browserify = require('browserify-middleware')
+
+var stylish = require('stylish')
+var autoprefixer = require('autoprefixer-stylus')
 
 exports.template = function(name){
   return function(req, res){
@@ -20,3 +25,15 @@ exports.markdownFile = function(filename, template){
 }
 
 exports.browserify = browserify
+
+exports.stylish = function(options){
+  if(_.isString(options)){
+    options = { src: options }
+  }
+
+  return stylish(_.defaults(options, {
+    setup: function(renderer) {
+      return renderer.use(autoprefixer())
+    }
+  }))
+}

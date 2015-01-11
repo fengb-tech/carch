@@ -1,6 +1,4 @@
 var express = require('express')
-var stylish = require('stylish')
-var autoprefixer = require('autoprefixer-stylus')
 var appRoot = require('app-root-path')
 
 var render = require('carch/server/render')
@@ -14,11 +12,5 @@ app.get('/',         render.template('carch'))
 app.get('/about',    render.markdownFile(appRoot + '/README.md'))
 app.get('/carch.js', render.browserify(appRoot + '/browser/carch.js'))
 
-app.use(stylish({
-  src: appRoot + '/styles',
-  setup: function(renderer) {
-    return renderer.use(autoprefixer())
-  }
-}))
-
+app.use(render.stylish(appRoot + '/styles'))
 app.use(express.static(appRoot + '/public'))
