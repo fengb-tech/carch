@@ -7,37 +7,44 @@ html, body {
   font: 16px Helvetica;
 }
 
+h1 {
+  margin: 0 24px 0 0;
+}
+
 a {
   color: inherit;
+  text-decoration: none;
 }
 
-main {
-  height: 100%;
-  margin-left: 120px;
-}
-
-aside {
-  position: absolute;
-  box-sizing: border-box;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 120px;
-  padding: 8px 0;
+header {
+  height: 40px;
+  line-height: 40px;
+  padding: 0 8px;
   background-color: #666;
   color: #fff;
-  text-align: center;
-  transition: margin-right 0.2s;
+
+  * {
+    display: inline-block;
+    vertical-align: top;
+  }
 
   footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    float: right;
 
-    #fps { font-style: italic; }
+    #fps {
+      font-size: 12px;
+      font-style: italic;
+    }
     #copy {
-      padding: 8px 0;
+      margin-left: 8px
       font-size: 10px;
     }
   }
+}
+
+main {
+  position: absolute;
+  top: 40px;
+  bottom: 0;
+  width: 100%;
 }
