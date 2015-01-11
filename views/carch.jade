@@ -1,17 +1,9 @@
-doctype html
-html
-  head
-    link(href='/carch.css' rel='stylesheet' type='text/css')
-    meta(name='viewport' content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no')
-    title CARCH
-  body
-    header
-      h1: a(href='/') CARCH
-      nav#menu
-        a(href='/about') About
-      footer
-        div#fps
-        div#copy 2015 &copy; FENGB TECH
-    main
-      canvas#carch
-    script(src='carch.js')
+extend /layout.jade
+
+block style
+  link(href='/carch.css' rel='stylesheet' type='text/css')
+
+block content
+  main
+    canvas#carch
+  script(src='carch.js')

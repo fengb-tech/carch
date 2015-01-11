@@ -1,9 +1,17 @@
 doctype html
 html
   head
-    link(href='/page.css' rel='stylesheet' type='text/css')
+    block style
+      link(href='/page.css' rel='stylesheet' type='text/css')
     meta(name='viewport' content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no')
     block title
       title carch
   body
+    header.page-header
+      h1: a(href='/') CARCH
+      nav.page-menu
+        a(href='/about') About
+      footer
+        div#fps
+        div.page-copy 2015 &copy; FENGB TECH
     block content
