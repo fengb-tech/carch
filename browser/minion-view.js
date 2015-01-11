@@ -1,5 +1,5 @@
-var PIXI = require('pixi')
 var _ = require('lodash')
+var PIXI = require('pixi')
 
 var classFactory = require('carch/util/class-factory')
 var time = require('carch/util/time')
@@ -14,6 +14,7 @@ module.exports = classFactory(function MinionView(proto){
   proto.init = function(options){
     options = options || {}
 
+    this.tickManager = options.tickManager
     this.displayCoord = options.displayCoord
     this.minion = options.minion
     this.sprite = new PIXI.Sprite(texture())
@@ -40,11 +41,13 @@ module.exports = classFactory(function MinionView(proto){
     var fromDisplayCoord = this.displayCoord(fromCoord)
     var toDisplayCoord = this.displayCoord(toCoord)
 
+    this.tickManager.add(this)
     this._tickDisplayCoord = function(targetTime){
       if(targetTime >= endMoveTime){
         this.sprite.position.x = toDisplayCoord[0]
         this.sprite.position.y = toDisplayCoord[1]
         delete this._tickDisplayCoord
+        this.tickManager.remove(this)
         return
       }
       var percentTime = (targetTime - startMoveTime) / totalDiffTime

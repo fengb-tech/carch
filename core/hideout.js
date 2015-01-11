@@ -41,5 +41,5 @@ module.exports = classFactory(function Hideout(proto){
     return true
   }
 
-  proto.tickTo = _.noop()
+  proto.tickTo = _.noop
 })
