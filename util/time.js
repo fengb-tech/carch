@@ -23,24 +23,25 @@ var time = module.exports = function(options){
   return val
 }
 
-time.loadTime = Date.now()
+time.baseTimestamp = Date.now()
 
 time.timestamp = function(){
   // Offsets based on UTC timestamp for synchronization reasons.
   if(typeof performance === 'object' && typeof performance.now === 'function'){
-    if(performance.timing && performance.timing.navigationStart) {
-      time.loadTime = performance.timing.navigationStart
+    var perf = performance
+    if(perf.timing && perf.timing.navigationStart) {
+      time.baseTimestamp = perf.timing.navigationStart
     } else {
-      time.loadTime -= performance.now()
+      time.baseTimestamp -= perf.now()
     }
     return function timestamp(){
-      return time.loadTime + performance.now()
+      return time.baseTimestamp + perf.now()
     }
   } else if(typeof process === 'object' && typeof process.hrtime === 'function'){
-    var baseline = process.hrtime()
+    var baseHrt = process.hrtime()
     return function timestamp(){
-      var hrt = process.hrtime(baseline)
-      return time.loadTime + time({ sec: hrt[0], ns: hrt[1] })
+      var hrt = process.hrtime(baseHrt)
+      return time.baseTimestamp + time({ sec: hrt[0], ns: hrt[1] })
     }
   } else {
     return Date.now

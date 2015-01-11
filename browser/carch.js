@@ -20,7 +20,7 @@ requestAnimationFrame(function(testTimestamp){
   if(testTimestamp < 1e12){
     gameloop = function(hrTimestamp){
       // DOMHighResTimeStamp = milliseconds since page load, not UNIX EPOCH
-      var timestamp = time.loadTime + hrTimestamp
+      var timestamp = time.loadTimestamp + hrTimestamp
       hideoutView.tickTo(timestamp)
       renderer.render(hideoutView.stage)
       requestAnimationFrame(gameloop)
