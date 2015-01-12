@@ -39,7 +39,7 @@ module.exports = function blog(options){
     )
   }
 
-  return function stylus(req, res, next){
+  return function blog(req, res, next){
     if(req.method != 'GET' && req.method != 'HEAD') {
       return next()
     }
