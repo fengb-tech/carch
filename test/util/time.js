@@ -4,12 +4,14 @@ var time = require('carch/util/time')
 
 describe('time()', function(){
   describe('.now()', function(){
-    it('is within 1ms of Date.now()', function(){
-      expect(time.now()).to.be.closeTo(Date.now(), 1)
+    it('is within 5ms of Date.now()', function(){
+      // Theoretically should be 1ms but I don't really care and this is slightly brittle
+      expect(time.now()).to.be.closeTo(Date.now(), 5)
     })
 
-    it('is more precise than Date.now()', function(){
-      expect(time.now()).to.not.equal(Date.now())
+    it('is super precise', function(){
+      var now = time.now()
+      expect(now).to.not.equal(Math.round(now))
     })
   })
 
