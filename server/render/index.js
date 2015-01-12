@@ -51,12 +51,18 @@ exports.blog = function(options){
   }
 
   return blog(_.defaults(options, {
-    fileExtension: 'md',
-    render: function(req, res, content){
-      res.render('blog/page', {
+    fileExtension: '.md',
+    renderIndex: function(req, res, articles){
+      res.render('blog/index', {
+        bodyClass: 'blog-index',
+        articles: articles,
+      })
+    },
+    renderArticle: function(req, res, content){
+      res.render('blog/article', {
         bodyClass: 'blog',
         content: markdown(content),
       })
-    }
+    },
   }))
 }
