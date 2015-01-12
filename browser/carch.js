@@ -1,4 +1,5 @@
 /* globals document, window */
+
 var PIXI = require('pixi.js')
 var _ = require('lodash')
 

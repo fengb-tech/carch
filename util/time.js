@@ -13,13 +13,9 @@ var MS_PER_US    = 1 / US_PER_MS
 
 var time = module.exports = function(options){
   var val = 0
-
-  var keys = Object.keys(options)
-  for(var i=0; i < keys.length; i++){
-    var key = keys[i]
+  for(var key in options){
     val += time[key](options[key])
   }
-
   return val
 }
 
@@ -46,34 +42,34 @@ time.now = function(){
   }
 }()
 
-time.ns = function(ns){
+time.ns = function ns(ns){
   return MS_PER_US * US_PER_NS * ns
 }
 
-time.µs = time.us = function(us){
+time.µs = time.us = function µs(us){
   return MS_PER_US * us
 }
 
-time.ms = function(ms){
+time.ms = function ms(ms){
   return ms
 }
 
-time.sec = function(sec){
+time.sec = function sec(sec){
   return MS_PER_SEC * sec
 }
 
-time.min = function(min){
+time.min = function min(min){
   return MS_PER_SEC * SEC_PER_MIN * min
 }
 
-time.hour = function(hour){
+time.hour = function hour(hour){
   return MS_PER_SEC * SEC_PER_MIN * MIN_PER_HOUR * hour
 }
 
-time.day = function(day){
+time.day = function day(day){
   return MS_PER_SEC * SEC_PER_MIN * MIN_PER_HOUR * HOUR_PER_DAY * day
 }
 
-time.year = function(year){
+time.year = function year(year){
   return MS_PER_SEC * SEC_PER_MIN * MIN_PER_HOUR * HOUR_PER_DAY * DAY_PER_YEAR * year
 }
