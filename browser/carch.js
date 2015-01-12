@@ -1,14 +1,14 @@
 /* globals document, window */
-var PIXI = require('pixi')
+var PIXI = require('pixi.js')
 var _ = require('lodash')
 
 var time = require('carch/util/time')
 
 var demo = require('carch/browser/demo')
 
-var dom = document.getElementById('carch')
-var parentDom = dom.parentElement
-var renderer = PIXI.autoDetectRenderer(parentDom.clientWidth, parentDom.clientHeight, dom)
+var parentDom = document.getElementsByTagName('main')[0]
+var renderer = PIXI.autoDetectRenderer(parentDom.clientWidth, parentDom.clientHeight)
+parentDom.appendChild(renderer.view)
 
 window.addEventListener('resize', _.debounce(function(){
   renderer.resize(parentDom.clientWidth, parentDom.clientHeight)

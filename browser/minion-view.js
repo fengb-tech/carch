@@ -1,5 +1,5 @@
 var _ = require('lodash')
-var PIXI = require('pixi')
+var PIXI = require('pixi.js')
 
 var classFactory = require('carch/util/class-factory')
 var time = require('carch/util/time')

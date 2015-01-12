@@ -1,6 +1,6 @@
 /* globals performance */
 
-var PIXI = require('pixi')
+var PIXI = require('pixi.js')
 
 var colors = require('carch/browser/colors')
 var HideoutView = require('carch/browser/hideout-view')
