@@ -1,7 +1,7 @@
 CARCH [![Build Status][travis-image]](travis-url)
 =====
-CARCH will be a Javascript game at some point in time.  It is currently a tech
-demo of sorts.
+CARCH is a Javascript game, or it will be at some point in time.  It is
+currently just a tech demo.
 
 Technology
 -------

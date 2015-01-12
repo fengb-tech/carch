@@ -1,4 +1,9 @@
 extends /layout
 
 block content
+  h1
+    a(href='/blog') Blog
+    = ' - '
+    = title
+  em #{year}-#{month}-#{day}
   != content

@@ -58,11 +58,11 @@ exports.blog = function(options){
         articles: articles,
       })
     },
-    renderArticle: function(req, res, content){
-      res.render('blog/article', {
+    renderArticle: function(req, res, options){
+      res.render('blog/article', _.extend(options, {
         bodyClass: 'blog',
-        content: markdown(content),
-      })
+        content: markdown(options.content),
+      }))
     },
   }))
 }

@@ -21,15 +21,19 @@ module.exports = function blog(options){
     return chunks[chunks.length - 1]
   }
 
+  function articleFromFilename(filename){
+    var article = XRegExp.exec(filename, YYYY_MM_DD_ARTICLE)
+    article.path = article.input
+    article.title = S(article.name).capitalize().s
+    return article
+  }
+
   function articlesFromFiles(files, callback){
     callback(_.chain(files)
       .filter(function(file){ return path.extname(file) === fileExtension })
       .map(function(file){
         var basename = path.basename(file, fileExtension)
-        var article = XRegExp.exec(basename, YYYY_MM_DD_ARTICLE)
-        article.path = article.input
-        article.title = S(article.name).capitalize().s
-        return article
+        return articleFromFilename(basename)
       })
       .value()
     )
@@ -43,6 +47,9 @@ module.exports = function blog(options){
     var filename = blogFilename(req.url)
     if(filename.length === 0){
       fs.readdir(src, function(err, files){
+        if(err){
+          next(err)
+        }
         articlesFromFiles(files, function(articles){
           renderIndex(req, res, articles)
         })
@@ -51,13 +58,15 @@ module.exports = function blog(options){
       var filepath = path.normalize(path.join(src, filename + fileExtension))
       fs.readFile(filepath, function(err, fd){
         if(err){
-          if(err.code === 'ENOENT') {
+          if(err.code === 'ENOENT'){
             next()
           } else {
             next(err)
           }
         } else {
-          renderArticle(req, res, fd.toString())
+          var article = articleFromFilename(filename)
+          article.content = fd.toString()
+          renderArticle(req, res, article)
         }
       })
     }
