@@ -1,3 +1,22 @@
 @require '/common/reset'
 
 @require '/layout/page-header'
+
+html {
+  background: #eee;
+}
+
+main {
+  max-width: 960px;
+  padding: 8px 16px;
+  margin: 0 auto;
+  background: #fff;
+
+  h1, h2, p { margin: 12px 0; }
+  a {
+    color: #888;
+    text-decoration: underline;
+
+    &:hover { color: #000; }
+  }
+}
