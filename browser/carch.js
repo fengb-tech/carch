@@ -15,7 +15,7 @@ window.addEventListener('resize', _.debounce(function(){
   renderer.resize(parentDom.clientWidth, parentDom.clientHeight)
 }, 200))
 
-var game = demo.game()
+var game = demo.stationary()
 game.loop(renderer)
 
 var fpsDisplay = document.getElementById('fps')

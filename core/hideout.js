@@ -17,6 +17,7 @@ module.exports = classFactory(function Hideout(proto){
     this.dirWidth = this.width / 2
     this.dirHeight = this.height / 2
     this.coordOfMinion = {}
+    this.minions = []
   }
 
   proto.origin = [0, 0]
@@ -30,6 +31,7 @@ module.exports = classFactory(function Hideout(proto){
     var minion = Minion.create()
     var coord = this.origin
     this.coordOfMinion[minion] = coord
+    this.minions.push(minion)
     this.emit('addMinion', this, minion, coord)
     return minion
   }

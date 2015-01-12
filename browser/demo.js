@@ -2,11 +2,28 @@ var Hideout = require('carch/core/hideout')
 
 var Game = require('carch/browser/game')
 
-exports.game = function(){
+function randomInterval(start, end){
+  var interval = end - start + 1
+  return (start + interval * Math.random()) | 0
+}
+
+exports.stationary = function(){
   var hideout = Hideout.create({ width: 20, height: 10 })
-  var game = Game.create({ hideout: hideout })
+  for(var i = 0; i < 10; i++){
+    var minion = hideout.addMinion()
+    var coord = [
+      randomInterval(-hideout.dirWidth, +hideout.dirWidth),
+      randomInterval(-hideout.dirHeight, +hideout.dirHeight),
+    ]
+    hideout.moveMinion(minion, coord)
+  }
+  return Game.create({ hideout: hideout })
+}
+
+exports.randomWalk = function(){
+  var hideout = Hideout.create({ width: 20, height: 10 })
   var minion = hideout.addMinion()
-  function randomWalk(){
+  setInterval(function randomWalk(){
     var rand = Math.random()
     var oldCoord = hideout.coordOfMinion[minion]
     var newCoord = oldCoord.slice(0)
@@ -24,7 +41,6 @@ exports.game = function(){
     } else {
       hideout.moveMinion(minion, hideout.origin)
     }
-  }
-  setInterval(randomWalk, 700)
-  return game
+  }, 700)
+  return Game.create({ hideout: hideout })
 }

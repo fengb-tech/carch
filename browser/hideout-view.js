@@ -12,12 +12,19 @@ module.exports = classFactory(function HideoutView(proto){
     this.hideout = options.hideout
     this.pixiContainer = options.pixiContainer
 
-    this.hideout.on('addMinion', _.bind(this.onAddMinion, this))
+    var self = this
+    this.hideout.on('addMinion', function(hideout, minion, coord){
+      self.addMinionView(minion, coord)
+    })
+    for(var i=0; i < this.hideout.minions.length; i++){
+      var minion = this.hideout.minions[i]
+      self.addMinionView(minion, this.hideout.coordOfMinion[minion])
+    }
   }
 
   proto.tickTo = _.noop
 
-  proto.onAddMinion = function(hideout, minion, coord){
+  proto.addMinionView = function(minion, coord){
     var minionView = MinionView.create({
       displayCoord: _.bind(this.displayCoord, this),
       tickManager: this.tickManager,
