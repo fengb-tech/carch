@@ -1,23 +1,12 @@
 var _ = require('lodash')
 
 var fs = require('fs')
-var markdown = require('marked')
 var path = require('path')
-var url = require('url')
 
 module.exports = function blog(options){
-  if(_.isString(options)){
-    options = { src: options }
-  }
-
   var src = path.normalize(options.src)
-  var ext = 'md'
-  var pageTemplate = 'blog/page'
-  function render(req, res, data){
-    res.render(pageTemplate, {
-      content: markdown(data)
-    })
-  }
+  var fileExtension = options.fileExtension
+  var render = options.render
 
   function blogFilename(urlAbs){
     var chunks = urlAbs.split('/')
@@ -30,7 +19,7 @@ module.exports = function blog(options){
     }
 
     var filename = blogFilename(req.url)
-    var filepath = path.normalize(path.join(src, filename + '.' + ext))
+    var filepath = path.normalize(path.join(src, filename + '.' + fileExtension))
     fs.readFile(filepath, function(error, data){
       if(error){
         if(error.code === 'ENOENT') {

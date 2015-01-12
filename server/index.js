@@ -9,7 +9,7 @@ app.set('view engine', 'jade')
 app.locals.basedir = app.get('views')
 
 app.get('/',         render.template('carch'))
-app.get('/about',    render.markdownFile(appRoot + '/README.md'))
+app.get('/about',    render.markdownFile(appRoot + '/README.md', { bodyClass: 'p-about' }))
 app.get('/contact',  render.template('contact'))
 app.use('/blog',     render.blog(appRoot + '/views/blog'))
 
