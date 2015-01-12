@@ -35,7 +35,7 @@ module.exports = classFactory(function Game(proto){
     requestAnimationFrame(function(testTimestamp){
       if(testTimestamp < 1e12){
         // DOMHighResTimeStamp = milliseconds since page load, not UNIX EPOCH
-        if(performance.timing && performance.timing.navigationStart){
+        if(typeof performance === 'object' && performance.timing && performance.timing.navigationStart){
           var base = performance.timing.navigationStart
           requestAnimationFrame(function gameLoop(hrTimestamp){
             self.tickTo(base + hrTimestamp)
