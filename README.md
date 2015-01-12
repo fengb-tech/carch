@@ -1,4 +1,4 @@
-CARCH [![Build Status][travis-image]](travis-url)
+CARCH [![Build Status][travis-image]][travis-url]
 =====
 CARCH is a Javascript game, or it will be at some point in time.  It is
 currently just a tech demo.
