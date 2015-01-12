@@ -37,3 +37,5 @@ exports.stylish = function(options){
     }
   }))
 }
+
+exports.blog = require('./blog')

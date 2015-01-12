@@ -12,5 +12,7 @@ app.get('/',         render.template('carch'))
 app.get('/about',    render.markdownFile(appRoot + '/README.md'))
 app.get('/carch.js', render.browserify(appRoot + '/browser/carch.js'))
 
+app.use('/blog',     render.blog(appRoot + '/views/blog'))
+
 app.use(render.stylish(appRoot + '/styles'))
 app.use(express.static(appRoot + '/public'))
