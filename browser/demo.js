@@ -7,9 +7,9 @@ function randomInterval(start, end){
   return (start + interval * Math.random()) | 0
 }
 
-exports.stationary = function(){
+function createHideout(numMinions){
   var hideout = Hideout.create({ width: 20, height: 10 })
-  for(var i = 0; i < 10; i++){
+  for(var i = 0; i < numMinions; i++){
     var minion = hideout.addMinion()
     var coord = [
       randomInterval(-hideout.dirWidth, +hideout.dirWidth),
@@ -17,30 +17,34 @@ exports.stationary = function(){
     ]
     hideout.moveMinion(minion, coord)
   }
+  return hideout
+}
+
+exports.createGame = function(numMinions){
+  var hideout = createHideout(numMinions)
   return Game.create({ hideout: hideout })
 }
 
-exports.randomWalk = function(){
-  var hideout = Hideout.create({ width: 20, height: 10 })
-  var minion = hideout.addMinion()
-  setInterval(function randomWalk(){
-    var rand = Math.random()
-    var oldCoord = hideout.coordOfMinion[minion]
-    var newCoord = oldCoord.slice(0)
-    if(rand < 0.25){
-      newCoord[0]--
-    } else if(rand < 0.5){
-      newCoord[0]++
-    } else if(rand < 0.75){
-      newCoord[1]--
-    } else {
-      newCoord[1]++
-    }
-    if(hideout.containsCoord(newCoord)){
-      hideout.moveMinion(minion, newCoord)
-    } else {
-      hideout.moveMinion(minion, hideout.origin)
-    }
+exports.aiRandomWalk = function(game){
+  setInterval(function(){
+    game.hideout.minions.forEach(function(minion){
+      var rand = Math.random()
+      var oldCoord = game.hideout.coordOfMinion[minion]
+      var newCoord = oldCoord.slice(0)
+      if(rand < 0.25){
+        newCoord[0]--
+      } else if(rand < 0.5){
+        newCoord[0]++
+      } else if(rand < 0.75){
+        newCoord[1]--
+      } else {
+        newCoord[1]++
+      }
+      if(game.hideout.containsCoord(newCoord)){
+        game.hideout.moveMinion(minion, newCoord)
+      } else {
+        game.hideout.moveMinion(minion, game.hideout.origin)
+      }
+    })
   }, 700)
-  return Game.create({ hideout: hideout })
 }
