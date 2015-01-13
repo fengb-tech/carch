@@ -34,18 +34,22 @@ module.exports = classFactory(function HideoutView(proto){
     //   https://github.com/GoodBoyDigital/pixi.js/issues/1132
     container.hitArea = new PIXI.Rectangle(0, 0, drawWidth, drawHeight)
 
-    var moveToPoint = new PIXI.Point()
+    var referencePoint
     function moving(moveData){
-      moveData.getLocalPosition(container, moveToPoint)
-      console.log(moveToPoint)
-      window.moveData = moveData
+      container.position.x = moveData.global.x - referencePoint.x
+      container.position.y = moveData.global.y - referencePoint.y
     }
+
     container.mousedown = container.touchstart = function(startData){
-      container.mousemove = moving
+      referencePoint = startData.global.clone()
+      referencePoint.x -= container.position.x
+      referencePoint.y -= container.position.y
+      container.mousemove = container.touchmove = moving
     }
 
     container.mouseup = container.touchend = container.mouseupoutside = container.touchendoutside = function(stopData){
       delete container.mousemove
+      delete container.touchmove
     }
 
     return container
