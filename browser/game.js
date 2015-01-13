@@ -33,31 +33,21 @@ module.exports = classFactory(function Game(proto){
 
   proto.loop = function(renderer){
     var self = this
-    requestAnimationFrame(function(testTimestamp){
-      if(testTimestamp < 1e12){
-        // DOMHighResTimeStamp = milliseconds since page load, not UNIX EPOCH
-        if(typeof performance === 'object' && performance.timing && performance.timing.navigationStart){
-          var base = performance.timing.navigationStart
-          requestAnimationFrame(function gameLoop(hrTimestamp){
-            self.tickTo(base + hrTimestamp)
-            renderer.render(self.stage)
-            requestAnimationFrame(gameLoop)
-          })
-        } else {
-          requestAnimationFrame(function gameLoop(){
-            // Don't use default argument since we don't have a good baseline
-            self.tickTo(time.now())
-            renderer.render(self.stage)
-            requestAnimationFrame(gameLoop)
-          })
-        }
-      } else {
-        requestAnimationFrame(function gameLoop(timestamp){
-          self.tickTo(timestamp)
-          renderer.render(self.stage)
-          requestAnimationFrame(gameLoop)
-        })
-      }
-    })
+    // DOMHighResTimeStamp = milliseconds since navigation start, not UNIX EPOCH
+    if(typeof performance === 'object' && performance.timing && performance.timing.navigationStart){
+      var base = performance.timing.navigationStart
+      requestAnimationFrame(function gameLoop(hrTimestamp){
+        self.tickTo(base + hrTimestamp)
+        renderer.render(self.stage)
+        requestAnimationFrame(gameLoop)
+      })
+    } else {
+      requestAnimationFrame(function gameLoop(_){
+        // Don't use timestamp argument since we don't have a good baseline
+        self.tickTo(time.now())
+        renderer.render(self.stage)
+        requestAnimationFrame(gameLoop)
+      })
+    }
   }
 })
