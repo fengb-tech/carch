@@ -26,7 +26,28 @@ module.exports = classFactory(function HideoutView(proto){
 
   proto.initContainer = function(){
     var texture = PIXI.Texture.fromImage('tile.png')
-    var container = new PIXI.TilingSprite(texture, this.hideout.width * 64, this.hideout.height * 64)
+    var drawWidth = this.hideout.width * 64
+    var drawHeight = this.hideout.height * 64
+    var container = new PIXI.TilingSprite(texture, drawWidth, drawHeight)
+    container.interactive = true
+    // Bug - need to manually set hitArea of TilingSprite:
+    //   https://github.com/GoodBoyDigital/pixi.js/issues/1132
+    container.hitArea = new PIXI.Rectangle(0, 0, drawWidth, drawHeight)
+
+    var moveToPoint = new PIXI.Point()
+    function moving(moveData){
+      moveData.getLocalPosition(container, moveToPoint)
+      console.log(moveToPoint)
+      window.moveData = moveData
+    }
+    container.mousedown = container.touchstart = function(startData){
+      container.mousemove = moving
+    }
+
+    container.mouseup = container.touchend = container.mouseupoutside = container.touchendoutside = function(stopData){
+      delete container.mousemove
+    }
+
     return container
   }
 
