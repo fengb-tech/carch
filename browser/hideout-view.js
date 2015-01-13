@@ -1,4 +1,5 @@
 var _ = require('lodash')
+var PIXI = require('pixi.js')
 
 var classFactory = require('carch/util/class-factory')
 
@@ -10,19 +11,24 @@ module.exports = classFactory(function HideoutView(proto){
 
     this.tickManager = options.tickManager
     this.hideout = options.hideout
-    this.pixiContainer = options.pixiContainer
+    this.pixiContainer = this.initContainer()
+    options.pixiContainer.addChild(this.pixiContainer)
 
     var self = this
     this.hideout.on('addMinion', function(hideout, minion, coord){
       self.addMinionView(minion, coord)
     })
-    for(var i=0; i < this.hideout.minions.length; i++){
+    for(var i = 0; i < this.hideout.minions.length; i++){
       var minion = this.hideout.minions[i]
       self.addMinionView(minion, this.hideout.coordOfMinion[minion])
     }
   }
 
-  proto.tickTo = _.noop
+  proto.initContainer = function(){
+    var texture = PIXI.Texture.fromImage('tile.png')
+    var container = new PIXI.TilingSprite(texture, this.hideout.width * 64, this.hideout.height * 64)
+    return container
+  }
 
   proto.addMinionView = function(minion, coord){
     var minionView = MinionView.create({

@@ -17,7 +17,7 @@ module.exports = classFactory(function Game(proto){
 
     this.hideout = options.hideout || Hideout.create()
     this.viewTickManager = TickManager.create()
-    this.stage = new PIXI.Stage(colors.DARK_BROWN)
+    this.stage = new PIXI.Stage(colors.BLACK)
 
     this.hideoutView = HideoutView.create({
       hideout: this.hideout,

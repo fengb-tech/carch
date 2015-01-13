@@ -8,7 +8,7 @@ function randomInterval(start, end){
 }
 
 function createHideout(numMinions){
-  var hideout = Hideout.create({ width: 20, height: 10 })
+  var hideout = Hideout.create({ width: 15, height: 10 })
   for(var i = 0; i < numMinions; i++){
     var minion = hideout.addMinion()
     var coord = [
