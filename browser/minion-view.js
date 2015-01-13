@@ -40,20 +40,14 @@ module.exports = classFactory(function MinionView(proto){
     this.tickManager.add(this)
     this.tickTo = function(targetTime){
       if(targetTime >= endMoveTime){
-        this.sprite.position.x = toDisplayCoord[0]
-        this.sprite.position.y = toDisplayCoord[1]
+        this.sprite.position.x = toDisplayCoord.x
+        this.sprite.position.y = toDisplayCoord.y
         this.tickTo = _.noop
         this.tickManager.remove(this)
         return
       }
       var percentTime = (targetTime - startMoveTime) / totalDiffTime
-      this.sprite.position.x = this.lerp(fromDisplayCoord[0], toDisplayCoord[0], percentTime)
-      this.sprite.position.y = this.lerp(fromDisplayCoord[1], toDisplayCoord[1], percentTime)
+      fromDisplayCoord.lerp(toDisplayCoord, percentTime, this.sprite.position)
     }
-  }
-
-  proto.lerp = function(from, to, percent){
-    var diff = to - from
-    return from + diff * percent
   }
 })

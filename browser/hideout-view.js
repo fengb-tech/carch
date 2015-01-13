@@ -4,6 +4,7 @@ var PIXI = require('pixi.js')
 var classFactory = require('carch/util/class-factory')
 
 var MinionView = require('carch/browser/minion-view')
+var Coord = require('carch/core/coord')
 
 module.exports = classFactory(function HideoutView(proto){
   proto.init = function(options){
@@ -66,7 +67,9 @@ module.exports = classFactory(function HideoutView(proto){
   }
 
   proto.displayCoord = function(coord){
-    return [(coord[0] + this.hideout.dirWidth) * 64,
-            (coord[1] + this.hideout.dirHeight) * 64]
+    return Coord.create({
+      x: (coord[0] + this.hideout.dirWidth) * 64,
+      y: (coord[1] + this.hideout.dirHeight) * 64,
+    })
   }
 })
