@@ -66,10 +66,10 @@ module.exports = classFactory(function HideoutView(proto){
     this.pixiContainer.addChild(minionView.sprite)
   }
 
-  proto.displayCoord = function(coord){
-    return Coord.create({
-      x: (coord[0] + this.hideout.dirWidth) * 64,
-      y: (coord[1] + this.hideout.dirHeight) * 64,
-    })
+  proto.displayCoord = function(coord, targetCoord){
+    targetCoord = targetCoord || Coord.create()
+    targetCoord.x = (coord.x + this.hideout.dirWidth) * 64
+    targetCoord.y = (coord.y + this.hideout.dirHeight) * 64
+    return targetCoord
   }
 })

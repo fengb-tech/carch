@@ -1,3 +1,6 @@
+var _ = require('lodash')
+
+var Coord = require('carch/core/coord')
 var Hideout = require('carch/core/hideout')
 
 var Game = require('carch/browser/game')
@@ -11,10 +14,10 @@ function createHideout(numMinions){
   var hideout = Hideout.create({ width: 15, height: 10 })
   for(var i = 0; i < numMinions; i++){
     var minion = hideout.addMinion()
-    var coord = [
-      randomInterval(-hideout.dirWidth, +hideout.dirWidth),
-      randomInterval(-hideout.dirHeight, +hideout.dirHeight),
-    ]
+    var coord = Coord.create({
+      x: randomInterval(-hideout.dirWidth, +hideout.dirWidth),
+      y: randomInterval(-hideout.dirHeight, +hideout.dirHeight),
+    })
     hideout.moveMinion(minion, coord)
   }
   return hideout
@@ -30,15 +33,15 @@ exports.aiRandomWalk = function(game){
     game.hideout.minions.forEach(function(minion){
       var rand = Math.random()
       var oldCoord = game.hideout.coordOfMinion[minion]
-      var newCoord = oldCoord.slice(0)
+      var newCoord = Coord.create({ x: oldCoord.x, y: oldCoord.y })
       if(rand < 0.25){
-        newCoord[0]--
+        newCoord.x--
       } else if(rand < 0.5){
-        newCoord[0]++
+        newCoord.x++
       } else if(rand < 0.75){
-        newCoord[1]--
+        newCoord.y--
       } else {
-        newCoord[1]++
+        newCoord.y++
       }
       if(game.hideout.containsCoord(newCoord)){
         game.hideout.moveMinion(minion, newCoord)

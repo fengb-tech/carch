@@ -2,6 +2,7 @@ var expect = require('carch/test/support/chai').expect
 
 var sinon = require('sinon')
 
+var Coord = require('carch/core/coord')
 var Hideout = require('carch/core/hideout')
 var Minion = require('carch/core/minion')
 
@@ -36,7 +37,7 @@ describe('Hideout', function(){
     })
 
     it('moves the minion', function(){
-      var newCoord = [2, 3]
+      var newCoord = Coord.create({ x: 1, y: 2 })
       this.hideout.moveMinion(this.minion, newCoord)
       expect(this.hideout.coordOfMinion[this.minion]).to.equal(newCoord)
     })

@@ -4,6 +4,7 @@ var util = require('util')
 
 var classFactory = require('carch/util/class-factory')
 
+var Coord = require('carch/core/coord')
 var Minion = require('carch/core/minion')
 
 module.exports = classFactory(function Hideout(proto){
@@ -20,11 +21,11 @@ module.exports = classFactory(function Hideout(proto){
     this.minions = []
   }
 
-  proto.origin = [0, 0]
+  proto.origin = Coord.create({ x: 0, y: 0 })
 
   proto.containsCoord = function(coord){
-    return Math.abs(coord[0]) < this.dirWidth &&
-           Math.abs(coord[1]) < this.dirHeight
+    return Math.abs(coord.x) < this.dirWidth &&
+           Math.abs(coord.y) < this.dirHeight
   }
 
   proto.addMinion = function(){

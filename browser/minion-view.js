@@ -19,9 +19,7 @@ module.exports = classFactory(function MinionView(proto){
     this.minion = options.minion
     this.sprite = new PIXI.Sprite(texture())
     if(options.coord){
-      var displayCoord = this.displayCoord(options.coord)
-      this.sprite.position.x = displayCoord[0]
-      this.sprite.position.y = displayCoord[1]
+      this.displayCoord(options.coord, this.sprite.position)
     }
 
     this.minion.on('move', _.bind(this.onMove, this))
