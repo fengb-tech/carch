@@ -19,6 +19,9 @@ module.exports = classFactory(function Hideout(proto){
     this.dirHeight = this.height / 2
     this.coordOfMinion = {}
     this.minions = []
+
+    this._coordOfResourceStation = {}
+    this.resourceStations = []
   }
 
   proto.origin = Coord.create({ x: 0, y: 0 })
@@ -35,6 +38,23 @@ module.exports = classFactory(function Hideout(proto){
     this.minions.push(minion)
     this.emit('addMinion', this, minion, coord)
     return minion
+  }
+
+  proto.addResourceStation = function(resourceStation, coord){
+    this._coordOfResourceStation[resourceStation] = coord
+    this.resourceStations.push(resourceStation)
+    this.emit('addResourceStation', this, resourceStation, coord)
+    return resourceStation
+  }
+
+  proto.nearestResourceStationCoordTo = function(type, coord){
+    // FIXME
+    for(var i = 0; i < this.resourceStations.length; i++){
+      var resourceStation = this.resourceStations[i]
+      if(resourceStation.type === type) {
+        return this._coordOfResourceStation[resourceStation]
+      }
+    }
   }
 
   proto.moveMinion = function(minion, toCoord){

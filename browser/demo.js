@@ -2,6 +2,7 @@ var _ = require('lodash')
 
 var Coord = require('carch/core/coord')
 var Hideout = require('carch/core/hideout')
+var ResourceStation = require('carch/core/resource-station')
 
 var Game = require('carch/browser/game')
 
@@ -50,4 +51,23 @@ exports.aiRandomWalk = function(game){
       }
     })
   }, 700)
+}
+
+exports.musicalChairsGame = function(){
+  var hideout = createHideout(1)
+  var minion = hideout.minions[0]
+  var food = ResourceStation.create({ type: 'food' })
+  hideout.addResourceStation(food, Coord.create({ x: 4, y: -3 }))
+  var energy = ResourceStation.create({ type: 'energy' })
+  hideout.addResourceStation(energy, Coord.create({ x: -4, y: -3 }))
+
+  var types = ['food', 'energy']
+  var i = 0
+  setInterval(function(){
+    var minionCoord = hideout.coordOfMinion[minion]
+    var targetCoord = hideout.nearestResourceStationCoordTo(types[i % types.length], minionCoord)
+    hideout.moveMinion(minion, targetCoord)
+    i++
+  }, 1000)
+  return Game.create({ hideout: hideout })
 }
