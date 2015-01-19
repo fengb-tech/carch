@@ -5,7 +5,7 @@ var classFactory = require('carch/util/class-factory')
 var time = require('carch/util/time')
 
 var texture = _.memoize(function(name){
-  return PIXI.Texture.fromImage('/'+name.toLowerCase()+'.png')
+  return PIXI.Texture.fromImage('/'+name+'.png')
 })
 
 module.exports = classFactory(function ActorView(proto){
@@ -15,7 +15,7 @@ module.exports = classFactory(function ActorView(proto){
     this.tickManager = options.tickManager
     this.displayCoord = options.displayCoord
     this.actor = options.actor
-    this.textureName = options.actorName || options.actor.className
+    this.textureName = options.actor.textureName || options.actor.className.toLowerCase()
     this.sprite = new PIXI.Sprite(texture(this.textureName))
     if(options.coord){
       this.displayCoord(options.coord, this.sprite.position)

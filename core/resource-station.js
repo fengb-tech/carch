@@ -10,5 +10,6 @@ module.exports = classFactory(function ResourceStation(proto){
 
     this.type = options.type
     this.rate = options.rate
+    this.textureName = 'resourcestation-' + options.type
   }
 })
