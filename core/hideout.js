@@ -64,5 +64,16 @@ module.exports = classFactory(function Hideout(proto){
     return true
   }
 
+  proto.coordOf = function(actor){
+    switch(actor.className){
+      case 'Minion':
+        return this.coordOfMinion[actor]
+        break
+      case 'ResourceStation':
+        return this._coordOfResourceStation[actor]
+        break
+    }
+  }
+
   proto.tickTo = _.noop
 })

@@ -33,7 +33,7 @@ exports.aiRandomWalk = function(game){
   setInterval(function(){
     game.hideout.minions.forEach(function(minion){
       var rand = Math.random()
-      var oldCoord = game.hideout.coordOfMinion[minion]
+      var oldCoord = game.hideout.coordOf(minion)
       var newCoord = Coord.create({ x: oldCoord.x, y: oldCoord.y })
       if(rand < 0.25){
         newCoord.x--
@@ -64,7 +64,7 @@ exports.musicalChairsGame = function(){
   var types = ['food', 'energy']
   var i = 0
   setInterval(function(){
-    var minionCoord = hideout.coordOfMinion[minion]
+    var minionCoord = hideout.coordOf(minion)
     var targetCoord = hideout.nearestResourceStationCoordTo(types[i % types.length], minionCoord)
     hideout.moveMinion(minion, targetCoord)
     i++

@@ -21,7 +21,11 @@ module.exports = classFactory(function HideoutView(proto){
     })
     for(var i = 0; i < this.hideout.minions.length; i++){
       var minion = this.hideout.minions[i]
-      self.addActorView(minion, this.hideout.coordOfMinion[minion])
+      self.addActorView(minion, this.hideout.coordOf(minion))
+    }
+    for(var i = 0; i < this.hideout.resourceStations.length; i++){
+      var resourceStation = this.hideout.resourceStations[i]
+      self.addActorView(resourceStation, this.hideout.coordOf(resourceStation))
     }
   }
 
