@@ -3,7 +3,7 @@ var PIXI = require('pixi.js')
 
 var classFactory = require('carch/util/class-factory')
 
-var MinionView = require('carch/browser/minion-view')
+var ActorView = require('carch/browser/actor-view')
 var Coord = require('carch/core/coord')
 
 module.exports = classFactory(function HideoutView(proto){
@@ -17,11 +17,11 @@ module.exports = classFactory(function HideoutView(proto){
 
     var self = this
     this.hideout.on('addMinion', function(hideout, minion, coord){
-      self.addMinionView(minion, coord)
+      self.addActorView(minion, coord)
     })
     for(var i = 0; i < this.hideout.minions.length; i++){
       var minion = this.hideout.minions[i]
-      self.addMinionView(minion, this.hideout.coordOfMinion[minion])
+      self.addActorView(minion, this.hideout.coordOfMinion[minion])
     }
   }
 
@@ -56,14 +56,14 @@ module.exports = classFactory(function HideoutView(proto){
     return container
   }
 
-  proto.addMinionView = function(minion, coord){
-    var minionView = MinionView.create({
+  proto.addActorView = function(actor, coord){
+    var actorView = ActorView.create({
       displayCoord: _.bind(this.displayCoord, this),
       tickManager: this.tickManager,
-      minion: minion,
+      actor: actor,
       coord: coord,
     })
-    this.pixiContainer.addChild(minionView.sprite)
+    this.pixiContainer.addChild(actorView.sprite)
   }
 
   proto.displayCoord = function(coord, targetCoord){

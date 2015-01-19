@@ -4,30 +4,29 @@ var PIXI = require('pixi.js')
 var classFactory = require('carch/util/class-factory')
 var time = require('carch/util/time')
 
-var Minion = require('carch/core/minion')
-
-var texture = _.once(function(){
-  return PIXI.Texture.fromImage('/minion.png')
+var texture = _.memoize(function(name){
+  return PIXI.Texture.fromImage('/'+name.toLowerCase()+'.png')
 })
 
-module.exports = classFactory(function MinionView(proto){
+module.exports = classFactory(function ActorView(proto){
   proto.init = function(options){
     options = options || {}
 
     this.tickManager = options.tickManager
     this.displayCoord = options.displayCoord
-    this.minion = options.minion
-    this.sprite = new PIXI.Sprite(texture())
+    this.actor = options.actor
+    this.textureName = options.actorName || options.actor.className
+    this.sprite = new PIXI.Sprite(texture(this.textureName))
     if(options.coord){
       this.displayCoord(options.coord, this.sprite.position)
     }
 
-    this.minion.on('move', _.bind(this.onMove, this))
+    this.actor.on('move', _.bind(this.onMove, this))
   }
 
   proto.tickTo = _.noop
 
-  proto.onMove = function(minion, fromCoord, toCoord){
+  proto.onMove = function(actor, fromCoord, toCoord){
     var fromDisplayCoord = this.displayCoord(fromCoord)
     var toDisplayCoord = this.displayCoord(toCoord)
 

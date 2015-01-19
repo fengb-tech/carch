@@ -21,6 +21,7 @@ var classFactory = module.exports = function(callback){
   }
   if(callback.name){
     Class = namedFunc(callback.name, Class)
+    Class.prototype.className = callback.name
   }
 
   var proto = Class.prototype
