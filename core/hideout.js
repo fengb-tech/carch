@@ -31,6 +31,18 @@ module.exports = classFactory(function Hideout(proto){
            Math.abs(coord.y) < this.dirHeight
   }
 
+  proto.actors = function(callback){
+    if(!callback){
+      var actors = []
+      callback = function(actor){
+        actors.push(actor)
+      }
+    }
+    this.resourceStations.forEach(callback)
+    this.minions.forEach(callback)
+    return actors
+  }
+
   proto.addMinion = function(){
     var minion = Minion.create()
     var coord = this.origin

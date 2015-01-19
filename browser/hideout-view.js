@@ -19,14 +19,9 @@ module.exports = classFactory(function HideoutView(proto){
     this.hideout.on('addMinion', function(hideout, minion, coord){
       self.addActorView(minion, coord)
     })
-    for(var i = 0; i < this.hideout.minions.length; i++){
-      var minion = this.hideout.minions[i]
-      self.addActorView(minion, this.hideout.coordOf(minion))
-    }
-    for(var i = 0; i < this.hideout.resourceStations.length; i++){
-      var resourceStation = this.hideout.resourceStations[i]
-      self.addActorView(resourceStation, this.hideout.coordOf(resourceStation))
-    }
+    this.hideout.actors(function(actor){
+      self.addActorView(actor, self.hideout.coordOf(actor))
+    })
   }
 
   proto.initContainer = function(){
