@@ -34,6 +34,8 @@ module.exports = classFactory(function HideoutView(proto){
     //   https://github.com/GoodBoyDigital/pixi.js/issues/1132
     container.hitArea = new PIXI.Rectangle(0, 0, drawWidth, drawHeight)
 
+    var view = this
+
     var referencePoint
     function moving(moveData){
       container.position.x = moveData.global.x - referencePoint.x
@@ -50,6 +52,14 @@ module.exports = classFactory(function HideoutView(proto){
     container.mouseup = container.touchend = container.mouseupoutside = container.touchendoutside = function(stopData){
       delete container.mousemove
       delete container.touchmove
+    }
+
+    container.click = function(data){
+      if(view.selectedActorView){
+        var displayCoord = data.getLocalPosition(container)
+        var targetCoord = view.modelCoord(displayCoord)
+        view.hideout.moveActor(view.selectedActorView.actor, targetCoord)
+      }
     }
 
     return container
@@ -89,6 +99,13 @@ module.exports = classFactory(function HideoutView(proto){
     targetCoord = targetCoord || Coord.create()
     targetCoord.x = (coord.x + this.hideout.dirWidth) * 64
     targetCoord.y = (coord.y + this.hideout.dirHeight) * 64
+    return targetCoord
+  }
+
+  proto.modelCoord = function(displayCoord, targetCoord){
+    targetCoord = targetCoord || Coord.create()
+    targetCoord.x = Math.floor(displayCoord.x / 64 - this.hideout.dirWidth)
+    targetCoord.y = Math.floor(displayCoord.y / 64 - this.hideout.dirHeight)
     return targetCoord
   }
 })

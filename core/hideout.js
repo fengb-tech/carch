@@ -76,6 +76,24 @@ module.exports = classFactory(function Hideout(proto){
     return true
   }
 
+  proto.moveResourceStation = function(resourceStation, toCoord){
+    var fromCoord = this._coordOfResourceStation[resourceStation]
+    this._coordOfResourceStation[resourceStation] = toCoord
+    resourceStation.emit('move', resourceStation, fromCoord, toCoord)
+    return true
+  }
+
+  proto.moveActor = function(actor, toCoord){
+    switch(actor.className){
+      case 'Minion':
+        this.moveMinion(actor, toCoord)
+        break;
+      case 'ResourceStation':
+        this.moveResourceStation(actor, toCoord)
+        break
+    }
+  }
+
   proto.coordOf = function(actor){
     switch(actor.className){
       case 'Minion':
