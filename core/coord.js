@@ -1,6 +1,6 @@
 var classFactory = require('carch/util/class-factory')
 
-module.exports = classFactory(function Coord(proto){
+module.exports = classFactory('Coord', function(proto){
   var Class = this
 
   proto.init = function(options){

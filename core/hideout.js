@@ -7,7 +7,7 @@ var classFactory = require('carch/util/class-factory')
 var Coord = require('carch/core/coord')
 var Minion = require('carch/core/minion')
 
-module.exports = classFactory(function Hideout(proto){
+module.exports = classFactory('Hideout', function(proto){
   this.inherits(events.EventEmitter)
 
   proto.init = function(options){
@@ -84,7 +84,7 @@ module.exports = classFactory(function Hideout(proto){
   }
 
   proto.moveActor = function(actor, toCoord){
-    switch(actor.className){
+    switch(actor.cfName){
       case 'Minion':
         this.moveMinion(actor, toCoord)
         break;
@@ -95,7 +95,7 @@ module.exports = classFactory(function Hideout(proto){
   }
 
   proto.coordOf = function(actor){
-    switch(actor.className){
+    switch(actor.cfName){
       case 'Minion':
         return this.coordOfMinion[actor]
         break

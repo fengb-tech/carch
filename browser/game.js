@@ -11,7 +11,7 @@ var time = require('carch/util/time')
 var Hideout = require('carch/core/hideout')
 var TickManager = require('carch/core/tick-manager')
 
-module.exports = classFactory(function Game(proto){
+module.exports = classFactory('Game', function(proto){
   proto.init = function(options){
     options = options || {}
 

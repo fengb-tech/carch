@@ -1,30 +1,21 @@
 var _ = require('lodash')
 
-function namedFunc(name, anonFunc){
-  // This is so fugly.  We parse the function body, replace
-  // the name with our new name, and eval it back together.
-  var funcBody = anonFunc.toString().replace(/function.*?\(/, 'return function '+ name +'(')
-  return new Function(funcBody)() // jshint ignore:line
+var cfId = 1
+function nextCfId(){
+  return cfId++
 }
 
-var fid = 1
-function nextFid(){
-  return fid++
-}
-
-var classFactory = module.exports = function(callback){
+var classFactory = module.exports = function(cfName, callback){
   var Class = function(options){
-    this._assignFid()
+    this.cfId = nextCfId()
     if(this.init){
       this.init(options)
     }
   }
-  if(callback.name){
-    Class = namedFunc(callback.name, Class)
-    Class.prototype.className = callback.name
-  }
 
   var proto = Class.prototype
+
+  Class.cfName = proto.cfName = cfName
 
   Class.create = function(options){
     return new Class(options)
@@ -52,13 +43,8 @@ var classFactory = module.exports = function(callback){
     }
   }
   proto.init = proto.superInit
-  proto._assignFid = function(){
-    if(!this._fid){
-      this._fid = nextFid()
-    }
-  }
   proto.toString = function(){
-    return '<' + Class.name + '-' + this._fid + '>'
+    return '<' + Class.cfName + '-' + this.cfId + '>'
   }
 
   callback.call(Class, proto)

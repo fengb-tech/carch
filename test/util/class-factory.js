@@ -4,12 +4,12 @@ var classFactory = require('carch/util/class-factory')
 
 describe('classFactory', function(){
   beforeEach(function(){
-    this.Class = classFactory(function Foo(){})
+    this.Class = classFactory('Foo', function(){})
   })
 
   describe('naming', function(){
-    it('returns correct #name', function(){
-      expect(this.Class.name).to.equal('Foo')
+    it('returns correct #cfName', function(){
+      expect(this.Class.cfName).to.equal('Foo')
     })
 
     describe('instance#toString', function(){
@@ -28,7 +28,7 @@ describe('classFactory', function(){
 
   describe('callback', function(){
     it('passes prototype as argument', function(){
-      var Class = classFactory(function Foo(proto){
+      var Class = classFactory('Foo', function(proto){
         proto.foo = 'bar'
       })
 
@@ -36,7 +36,7 @@ describe('classFactory', function(){
     })
 
     it('passes the class as "this"', function(){
-      var Class = classFactory(function Foo(proto){
+      var Class = classFactory('Foo', function(proto){
         this.foo = 'bar'
       })
 

@@ -6,7 +6,7 @@ var classFactory = require('carch/util/class-factory')
 var ActorView = require('carch/browser/actor-view')
 var Coord = require('carch/core/coord')
 
-module.exports = classFactory(function HideoutView(proto){
+module.exports = classFactory('HideoutView', function(proto){
   proto.init = function(options){
     options = options || {}
 

@@ -3,7 +3,7 @@ var events = require('events')
 var classFactory = require('carch/util/class-factory')
 var time = require('carch/util/time')
 
-module.exports = classFactory(function Minion(proto){
+module.exports = classFactory('Minion', function(proto){
   this.inherits(events.EventEmitter)
 
   proto.init = function(options){

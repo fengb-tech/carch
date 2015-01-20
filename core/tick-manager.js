@@ -1,7 +1,7 @@
 var classFactory = require('carch/util/class-factory')
 var time = require('carch/util/time')
 
-module.exports = classFactory(function TickManager(proto){
+module.exports = classFactory('TickManager', function(proto){
   proto.init = function(options){
     options = options || {}
 

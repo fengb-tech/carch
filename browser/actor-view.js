@@ -11,7 +11,7 @@ var texture = _.memoize(function(name){
   return PIXI.Texture.fromImage('/'+name+'.png')
 })
 
-module.exports = classFactory(function ActorView(proto){
+module.exports = classFactory('ActorView', function(proto){
   this.inherits(events.EventEmitter)
 
   proto.init = function(options){
@@ -22,7 +22,7 @@ module.exports = classFactory(function ActorView(proto){
     this.tickManager = options.tickManager
     this.displayCoord = options.displayCoord
     this.actor = options.actor
-    this.textureName = options.actor.textureName || options.actor.className.toLowerCase()
+    this.textureName = options.actor.textureName || options.actor.cfName.toLowerCase()
     this.sprite = new PIXI.Sprite(texture(this.textureName))
     this.sprite.interactive = true
     if(options.coord){

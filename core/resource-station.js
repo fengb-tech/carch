@@ -2,7 +2,7 @@ var events = require('events')
 
 var classFactory = require('carch/util/class-factory')
 
-module.exports = classFactory(function ResourceStation(proto){
+module.exports = classFactory('ResourceStation', function(proto){
   this.inherits(events.EventEmitter)
 
   proto.init = function(options){
