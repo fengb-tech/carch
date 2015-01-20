@@ -63,6 +63,26 @@ module.exports = classFactory(function HideoutView(proto){
       coord: coord,
     })
     this.pixiContainer.addChild(actorView.sprite)
+    actorView.on('select', _.bind(this.select, this))
+    actorView.on('deselect', _.bind(this.deselect, this))
+  }
+
+  proto.select = function(actorView){
+    if(this.selectedActorView === actorView){
+      // Don't bother selecting selected view
+      return
+    }
+
+    if(this.selectedActorView){
+      this.selectedActorView.deselect()
+    }
+    this.selectedActorView = actorView
+  }
+
+  proto.deselect = function(actorView){
+    if(this.selectedActorView === actorView){
+      this.selectedActorView = null
+    }
   }
 
   proto.displayCoord = function(coord, targetCoord){

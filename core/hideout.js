@@ -32,8 +32,8 @@ module.exports = classFactory(function Hideout(proto){
   }
 
   proto.actors = function(callback){
+    var actors = []
     if(!callback){
-      var actors = []
       callback = function(actor){
         actors.push(actor)
       }
