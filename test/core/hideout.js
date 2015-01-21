@@ -30,7 +30,7 @@ describe('Hideout', function(){
     })
   })
 
-  describe('#moveMinion', function(){
+  describe('#moveActor', function(){
     beforeEach(function(){
       this.minion = this.hideout.addMinion()
       this.startCoord = this.hideout.coordOf(this.minion)
@@ -38,14 +38,14 @@ describe('Hideout', function(){
 
     it('moves the minion', function(){
       var newCoord = Coord.create({ x: 1, y: 2 })
-      this.hideout.moveMinion(this.minion, newCoord)
+      this.hideout.moveActor(this.minion, newCoord)
       expect(this.hideout.coordOf(this.minion)).to.equal(newCoord)
     })
 
     it('emits "move" event on minion', function(){
       var newCoord = [3, 2]
       this.minion.on('move', this.spy)
-      this.hideout.moveMinion(this.minion, newCoord)
+      this.hideout.moveActor(this.minion, newCoord)
       expect(this.spy).to.have.been.calledWith(this.minion, this.startCoord, newCoord)
     })
   })

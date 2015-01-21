@@ -3,6 +3,7 @@ var events = require('events')
 var util = require('util')
 
 var classFactory = require('carch/util/class-factory')
+var time = require('carch/util/time')
 
 var Coord = require('carch/core/coord')
 var Minion = require('carch/core/minion')
@@ -20,6 +21,7 @@ module.exports = classFactory('Hideout', function(proto){
     this.resourceStations = []
 
     this._coords = {}
+    this._movingCoords = {}
   }
 
   proto.origin = Coord.create({ x: 0, y: 0 })
@@ -68,35 +70,41 @@ module.exports = classFactory('Hideout', function(proto){
     }
   }
 
-  proto.moveMinion = function(minion, toCoord){
+  proto.moveActor = function(minion, toCoord){
     var fromCoord = this._coords[minion]
     this._coords[minion] = toCoord
-    minion.emit('move', minion, fromCoord, toCoord)
-    minion.emit('stop', minion, fromCoord, toCoord)
-    return true
-  }
-
-  proto.moveResourceStation = function(resourceStation, toCoord){
-    var fromCoord = this._coords[resourceStation]
-    this._coords[resourceStation] = toCoord
-    resourceStation.emit('move', resourceStation, fromCoord, toCoord)
-    resourceStation.emit('stop', resourceStation, fromCoord, toCoord)
-    return true
-  }
-
-  proto.moveActor = function(actor, toCoord){
-    switch(actor.cfName){
-      case 'Minion':
-        this.moveMinion(actor, toCoord)
-        break;
-      case 'ResourceStation':
-        this.moveResourceStation(actor, toCoord)
-        break
+    var now = time.now()
+    var toTime = now + time.ms(500)
+    this._movingCoords[minion] = {
+      fromTime: now,
+      toTime: toTime,
+      fromCoord: fromCoord,
+      toCoord: toCoord,
     }
+    minion.emit('move', minion, fromCoord, toCoord)
+
+    var self = this
+    setTimeout(function(){
+      minion.emit('stop', minion, fromCoord, toCoord)
+      delete self._movingCoords[minion]
+    }, toTime - now + 50)
+
+    return true
   }
 
-  proto.coordOf = function(actor){
-    return this._coords[actor]
+  proto.coordOf = function(actor, snapshotTime){
+    if(this._movingCoords[actor] && snapshotTime < this._movingCoords[actor].toTime){
+      var movingCoords = this._movingCoords[actor]
+      var duration = snapshotTime - movingCoords.fromTime
+      if(duration < 0){
+        return movingCoords.fromCoord
+      } else {
+        var frac = duration / (movingCoords.toTime - movingCoords.fromTime)
+        return movingCoords.fromCoord.lerp(movingCoords.toCoord, frac)
+      }
+    } else {
+      return this._coords[actor]
+    }
   }
 
   proto.tickTo = _.noop

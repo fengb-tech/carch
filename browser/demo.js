@@ -19,7 +19,7 @@ function createHideout(numMinions){
       x: randomInterval(-hideout.dirWidth, +hideout.dirWidth),
       y: randomInterval(-hideout.dirHeight, +hideout.dirHeight),
     })
-    hideout.moveMinion(minion, coord)
+    hideout.moveActor(minion, coord)
   }
   return hideout
 }
@@ -45,9 +45,9 @@ exports.aiRandomWalk = function(game){
         newCoord.y++
       }
       if(game.hideout.containsCoord(newCoord)){
-        game.hideout.moveMinion(minion, newCoord)
+        game.hideout.moveActor(minion, newCoord)
       } else {
-        game.hideout.moveMinion(minion, game.hideout.origin)
+        game.hideout.moveActor(minion, game.hideout.origin)
       }
     })
   }, 700)
@@ -66,7 +66,7 @@ exports.musicalChairsGame = function(){
   setInterval(function(){
     var minionCoord = hideout.coordOf(minion)
     var targetCoord = hideout.nearestResourceStationCoordTo(types[i % types.length], minionCoord)
-    hideout.moveMinion(minion, targetCoord)
+    hideout.moveActor(minion, targetCoord)
     i++
   }, 1000)
   return Game.create({ hideout: hideout })
