@@ -15,11 +15,11 @@ module.exports = classFactory('Hideout', function(proto){
     this.height = options.height
     this.dirWidth = this.width / 2
     this.dirHeight = this.height / 2
-    this.coordOfMinion = {}
     this.minions = []
 
-    this._coordOfResourceStation = {}
     this.resourceStations = []
+
+    this._coords = {}
   }
 
   proto.origin = Coord.create({ x: 0, y: 0 })
@@ -44,7 +44,7 @@ module.exports = classFactory('Hideout', function(proto){
   proto.addMinion = function(){
     var minion = Minion.create({ hideout: this })
     var coord = this.origin
-    this.coordOfMinion[minion] = coord
+    this._coords[minion] = coord
     this.minions.push(minion)
     this.emit('addMinion', this, minion, coord)
     return minion
@@ -52,7 +52,7 @@ module.exports = classFactory('Hideout', function(proto){
 
   proto.addResourceStation = function(resourceStation, coord){
     resourceStation.hideout = this
-    this._coordOfResourceStation[resourceStation] = coord
+    this._coords[resourceStation] = coord
     this.resourceStations.push(resourceStation)
     this.emit('addResourceStation', this, resourceStation, coord)
     return resourceStation
@@ -63,22 +63,22 @@ module.exports = classFactory('Hideout', function(proto){
     for(var i = 0; i < this.resourceStations.length; i++){
       var resourceStation = this.resourceStations[i]
       if(resourceStation.type === type) {
-        return this._coordOfResourceStation[resourceStation]
+        return this._coords[resourceStation]
       }
     }
   }
 
   proto.moveMinion = function(minion, toCoord){
-    var fromCoord = this.coordOfMinion[minion]
-    this.coordOfMinion[minion] = toCoord
+    var fromCoord = this._coords[minion]
+    this._coords[minion] = toCoord
     minion.emit('move', minion, fromCoord, toCoord)
     minion.emit('stop', minion, fromCoord, toCoord)
     return true
   }
 
   proto.moveResourceStation = function(resourceStation, toCoord){
-    var fromCoord = this._coordOfResourceStation[resourceStation]
-    this._coordOfResourceStation[resourceStation] = toCoord
+    var fromCoord = this._coords[resourceStation]
+    this._coords[resourceStation] = toCoord
     resourceStation.emit('move', resourceStation, fromCoord, toCoord)
     resourceStation.emit('stop', resourceStation, fromCoord, toCoord)
     return true
@@ -96,14 +96,7 @@ module.exports = classFactory('Hideout', function(proto){
   }
 
   proto.coordOf = function(actor){
-    switch(actor.cfName){
-      case 'Minion':
-        return this.coordOfMinion[actor]
-        break
-      case 'ResourceStation':
-        return this._coordOfResourceStation[actor]
-        break
-    }
+    return this._coords[actor]
   }
 
   proto.tickTo = _.noop
