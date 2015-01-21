@@ -6,20 +6,22 @@ function nextCfId(){
 }
 
 var classFactory = module.exports = function(cfName, callback){
-  var Class = function(options){
+  var Class = function(){
     this.cfId = nextCfId()
-    this.superInits()
-    if(this.init){
-      this.init(options)
-    }
   }
 
   var proto = Class.prototype
 
   Class.cfName = proto.cfName = cfName
 
-  Class.create = function(options){
-    return new Class(options)
+  Class.cfPool = []
+  Class.create = function(){
+    var instance = Class.cfPool.pop() || new Class()
+    instance.superInits.apply(instance, arguments)
+    if(instance.init){
+      instance.init.apply(instance, arguments)
+    }
+    return instance
   }
 
   Class.superInits = []
@@ -34,6 +36,18 @@ var classFactory = module.exports = function(cfName, callback){
     //
     // Drawback is that if Super has dynamic methods, this won't pick it up.
     _.extend(proto, Super.prototype)
+  }
+
+  proto.destroy = function(){
+    var keys = Object.keys(this)
+    for(var i = 0; i < keys.length; i++){
+      var key = keys[i]
+      if(key != 'cfId'){
+        delete this[key]
+      }
+    }
+
+    Class.cfPool.push(this)
   }
 
   proto.superInits = function(){

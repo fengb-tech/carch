@@ -44,7 +44,7 @@ describe('classFactory', function(){
     })
   })
 
-  describe('.inherits', function(){
+  describe('.inherits()', function(){
     beforeEach(function(){
       this.Super = function(){
         this.superInitted = true
@@ -61,6 +61,30 @@ describe('classFactory', function(){
     it('invokes Super()', function(){
       var instance = this.Class.create()
       expect(instance.superInitted).to.equal(true)
+    })
+  })
+
+  describe('.destroy()', function(){
+    it('drops the instance onto .cfPool', function(){
+      var instance = this.Class.create()
+      instance.destroy()
+      expect(this.Class.cfPool.length).to.equal(1)
+      expect(this.Class.cfPool[0]).to.equal(instance)
+    })
+
+    it('deletes all keys except cfId', function(){
+      var instance = this.Class.create()
+      instance.prop = 1
+      instance.prop2 = ''
+      instance.destroy()
+      expect(Object.keys(instance)).to.eql(['cfId'])
+    })
+
+    it('allows .create() directly from .cfPool', function(){
+      var instance = this.Class.create()
+      instance.destroy()
+      var instance2 = this.Class.create()
+      expect(instance2).to.equal(instance)
     })
   })
 })
