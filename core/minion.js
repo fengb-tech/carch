@@ -8,6 +8,7 @@ module.exports = classFactory('Minion', function(proto){
 
   proto.init = function(options){
     options = options || {}
+    this.hideout = options.hideout
     this.energy = options.energy || 100
     this.satiety = options.satiety || 100
     this.lastTick = options.lastTick || time.now()
@@ -22,5 +23,9 @@ module.exports = classFactory('Minion', function(proto){
     this.energy -= diff / time.hour(1) * 100
     this.satiety -= diff / time.min(15) * 100
     this.lastTick = targetTime
+  }
+
+  proto.coord = function(targetTime){
+    return this.hideout.coordOf(this, targetTime)
   }
 })

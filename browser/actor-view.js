@@ -28,6 +28,7 @@ module.exports = classFactory('ActorView', function(proto){
     }
 
     this.actor.on('move', _.bind(this.onMove, this))
+    this.actor.on('stop', _.bind(this.onStop, this))
 
     this.sprite.click = _.bind(this.select, this)
   }
@@ -61,25 +62,16 @@ module.exports = classFactory('ActorView', function(proto){
     this.sprite.addChild(box)
   }
 
-  proto.onMove = function(actor, fromCoord, toCoord){
-    var fromDisplayCoord = this.displayCoord(fromCoord)
-    var toDisplayCoord = this.displayCoord(toCoord)
-
-    var startMoveTime = time.now()
-    var totalDiffTime = time.sec(0.5)
-    var endMoveTime = startMoveTime + totalDiffTime
-
+  proto.onMove = function(actor){
     this.tickManager.add(this)
-    this.tickTo = function(targetTime){
-      if(targetTime >= endMoveTime){
-        this.sprite.position.x = toDisplayCoord.x
-        this.sprite.position.y = toDisplayCoord.y
-        this.tickTo = _.noop
-        this.tickManager.remove(this)
-        return
-      }
-      var percentTime = (targetTime - startMoveTime) / totalDiffTime
-      fromDisplayCoord.lerp(toDisplayCoord, percentTime, this.sprite.position)
-    }
+  }
+
+  proto.onStop = function(actor){
+    this.tickManager.remove(this)
+  }
+
+  proto.tickTo = function(targetTime){
+    var modelCoord = this.actor.coord(targetTime)
+    this.displayCoord(modelCoord, this.sprite)
   }
 })

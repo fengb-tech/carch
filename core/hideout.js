@@ -42,7 +42,7 @@ module.exports = classFactory('Hideout', function(proto){
   }
 
   proto.addMinion = function(){
-    var minion = Minion.create()
+    var minion = Minion.create({ hideout: this })
     var coord = this.origin
     this.coordOfMinion[minion] = coord
     this.minions.push(minion)
@@ -51,6 +51,7 @@ module.exports = classFactory('Hideout', function(proto){
   }
 
   proto.addResourceStation = function(resourceStation, coord){
+    resourceStation.hideout = this
     this._coordOfResourceStation[resourceStation] = coord
     this.resourceStations.push(resourceStation)
     this.emit('addResourceStation', this, resourceStation, coord)
@@ -71,6 +72,7 @@ module.exports = classFactory('Hideout', function(proto){
     var fromCoord = this.coordOfMinion[minion]
     this.coordOfMinion[minion] = toCoord
     minion.emit('move', minion, fromCoord, toCoord)
+    minion.emit('stop', minion, fromCoord, toCoord)
     return true
   }
 
@@ -78,6 +80,7 @@ module.exports = classFactory('Hideout', function(proto){
     var fromCoord = this._coordOfResourceStation[resourceStation]
     this._coordOfResourceStation[resourceStation] = toCoord
     resourceStation.emit('move', resourceStation, fromCoord, toCoord)
+    resourceStation.emit('stop', resourceStation, fromCoord, toCoord)
     return true
   }
 

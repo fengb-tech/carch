@@ -11,6 +11,13 @@ describe('TickManager', function(){
     this.ticker = sinon.stub({ tickTo: function(){} })
   })
 
+  describe('#add()', function(){
+    it('forces tick', function(){
+      this.tickManager.add(this.ticker)
+      expect(this.ticker.tickTo).to.have.been.calledWith(this.startTime)
+    })
+  })
+
   describe('#tickTo()', function(){
     it('accepts calls by default', function(){
       this.tickManager.tickTo(this.targetTime)
@@ -24,9 +31,11 @@ describe('TickManager', function(){
 
     it('does not delegate to #remove() tickers', function(){
       this.tickManager.add(this.ticker)
+      expect(this.ticker.tickTo).to.have.callCount(1)
+
       this.tickManager.remove(this.ticker)
       this.tickManager.tickTo(this.targetTime)
-      expect(this.ticker.tickTo).to.have.callCount(0)
+      expect(this.ticker.tickTo).to.have.callCount(1)
     })
   })
 })

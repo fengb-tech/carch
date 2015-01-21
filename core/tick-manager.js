@@ -19,6 +19,7 @@ module.exports = classFactory('TickManager', function(proto){
 
   proto.add = function(ticker){
     this._tickers[ticker] = ticker
+    ticker.tickTo(this.lastTickAt)
   }
 
   proto.remove = function(ticker){
