@@ -8,6 +8,7 @@ function nextCfId(){
 var classFactory = module.exports = function(cfName, callback){
   var Class = function(options){
     this.cfId = nextCfId()
+    this.superInits()
     if(this.init){
       this.init(options)
     }
@@ -21,28 +22,26 @@ var classFactory = module.exports = function(cfName, callback){
     return new Class(options)
   }
 
-  Class.supers = []
-  Class.inherits = function(){
-    for(var i=0; i < arguments.length; i++){
-      var Super = arguments[i]
-      Class.supers.push(Super)
+  Class.superInits = []
+  Class.inherits = function(Super, superInit){
+    superInit = superInit || Super
 
-      // Not using the prototype chain because:
-      //   1. this is faster for lookups
-      //   2. this allows for multiple "inheritance"
-      //
-      // Drawback is that if Super has dynamic methods, this won't pick it up.
-      _.extend(proto, Super.prototype)
-    }
+    Class.superInits.push(superInit)
+
+    // Not using the prototype chain because:
+    //   1. this is faster for lookups
+    //   2. this allows for multiple "inheritance"
+    //
+    // Drawback is that if Super has dynamic methods, this won't pick it up.
+    _.extend(proto, Super.prototype)
   }
 
-  proto.superInit = function(){
-    for(var i=0; i < Class.supers.length; i++){
-      var Super = Class.supers[i]
-      Super.apply(this, arguments)
+  proto.superInits = function(){
+    for(var i=0; i < Class.superInits.length; i++){
+      var superInit = Class.superInits[i]
+      superInit.apply(this, arguments)
     }
   }
-  proto.init = proto.superInit
   proto.toString = function(){
     return '<' + Class.cfName + '-' + this.cfId + '>'
   }

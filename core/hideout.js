@@ -11,8 +11,6 @@ module.exports = classFactory('Hideout', function(proto){
   this.inherits(events.EventEmitter)
 
   proto.init = function(options){
-    this.superInit()
-
     this.width = options.width
     this.height = options.height
     this.dirWidth = this.width / 2

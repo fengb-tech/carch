@@ -7,8 +7,6 @@ module.exports = classFactory('Minion', function(proto){
   this.inherits(events.EventEmitter)
 
   proto.init = function(options){
-    this.superInit()
-
     options = options || {}
     this.energy = options.energy || 100
     this.satiety = options.satiety || 100

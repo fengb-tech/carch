@@ -15,8 +15,6 @@ module.exports = classFactory('ActorView', function(proto){
   this.inherits(events.EventEmitter)
 
   proto.init = function(options){
-    this.superInit()
-
     options = options || {}
 
     this.tickManager = options.tickManager

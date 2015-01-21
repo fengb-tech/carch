@@ -32,7 +32,7 @@ describe('classFactory', function(){
         proto.foo = 'bar'
       })
 
-      expect(new Class().foo).to.equal('bar')
+      expect(Class.create().foo).to.equal('bar')
     })
 
     it('passes the class as "this"', function(){
@@ -53,17 +53,13 @@ describe('classFactory', function(){
       this.Class.inherits(this.Super)
     })
 
-    it('adds Super to .supers', function(){
-      expect(this.Class.supers).to.include(this.Super)
-    })
-
     it('adds Super.prototype methods', function(){
-      var instance = new this.Class()
+      var instance = this.Class.create()
       expect(instance.superProtod).to.equal(true)
     })
 
     it('invokes Super()', function(){
-      var instance = new this.Class()
+      var instance = this.Class.create()
       expect(instance.superInitted).to.equal(true)
     })
   })
