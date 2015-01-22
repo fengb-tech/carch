@@ -29,28 +29,39 @@ exports.createGame = function(numMinions){
   return Game.create({ hideout: hideout })
 }
 
-exports.aiRandomWalk = function(game){
-  setInterval(function(){
-    game.hideout.minions.forEach(function(minion){
-      var rand = Math.random()
-      var oldCoord = game.hideout.coordOf(minion)
-      var newCoord = Coord.create({ x: oldCoord.x, y: oldCoord.y })
-      if(rand < 0.25){
-        newCoord.x--
-      } else if(rand < 0.5){
-        newCoord.x++
-      } else if(rand < 0.75){
-        newCoord.y--
-      } else {
-        newCoord.y++
+exports.aiRandomWalk = function(game, interval){
+  interval = interval || 700
+  var last = 0
+  game.viewTickManager.add({
+    tickTo: function(targetTimestamp){
+      if(targetTimestamp - last < interval){
+        return
       }
-      if(game.hideout.containsCoord(newCoord)){
-        game.hideout.moveActor(minion, newCoord)
-      } else {
-        game.hideout.moveActor(minion, game.hideout.origin)
+
+      last = targetTimestamp
+
+      for(var i = 0; i < game.hideout.minions.length; i++){
+        var minion = game.hideout.minions[i]
+        var rand = Math.random()
+        var oldCoord = game.hideout.coordOf(minion)
+        var newCoord = Coord.create({ x: oldCoord.x, y: oldCoord.y })
+        if(rand < 0.25){
+          newCoord.x--
+        } else if(rand < 0.5){
+          newCoord.x++
+        } else if(rand < 0.75){
+          newCoord.y--
+        } else {
+          newCoord.y++
+        }
+        if(game.hideout.containsCoord(newCoord)){
+          game.hideout.moveActor(minion, newCoord)
+        } else {
+          game.hideout.moveActor(minion, game.hideout.origin)
+        }
       }
-    })
-  }, 700)
+    }
+  })
 }
 
 exports.musicalChairsGame = function(){

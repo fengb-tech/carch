@@ -1,0 +1,9 @@
+extend /layout
+
+block content
+  div#output Loading benchmark; browser may freeze...
+  script(src='benchmark.js')
+  script.
+    var output = document.getElementById('output')
+    var opsPerSec = benchmark()
+    output.innerText = opsPerSec + ' ops / sec'
