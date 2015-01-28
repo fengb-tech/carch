@@ -106,6 +106,4 @@ module.exports = classFactory('Hideout', function(proto){
       return this._coords[actor]
     }
   }
-
-  proto.tickTo = _.noop
 })

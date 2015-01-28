@@ -33,8 +33,6 @@ module.exports = classFactory('ActorView', function(proto){
     this.sprite.click = _.bind(this.select, this)
   }
 
-  proto.tickTo = _.noop
-
   proto.deselect = function(){
     if(!this.selected){
       return
