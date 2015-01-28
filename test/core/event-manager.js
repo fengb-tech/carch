@@ -11,9 +11,9 @@ describe('EventManager', function(){
     this.ticker = sinon.stub({ tickTo: function(){} })
   })
 
-  describe('#add()', function(){
+  describe('#addTicker()', function(){
     it('forces tick', function(){
-      this.eventManager.add(this.ticker)
+      this.eventManager.addTicker(this.ticker)
       expect(this.ticker.tickTo).to.have.been.calledWith(this.startTime)
     })
   })
@@ -23,17 +23,17 @@ describe('EventManager', function(){
       this.eventManager.tickTo(this.targetTime)
     })
 
-    it('delegates to #add() tickers', function(){
-      this.eventManager.add(this.ticker)
+    it('delegates to #addTicker() tickers', function(){
+      this.eventManager.addTicker(this.ticker)
       this.eventManager.tickTo(this.targetTime)
       expect(this.ticker.tickTo).to.have.been.calledWith(this.targetTime)
     })
 
     it('does not delegate to #remove() tickers', function(){
-      this.eventManager.add(this.ticker)
+      this.eventManager.addTicker(this.ticker)
       expect(this.ticker.tickTo).to.have.callCount(1)
 
-      this.eventManager.remove(this.ticker)
+      this.eventManager.removeTicker(this.ticker)
       this.eventManager.tickTo(this.targetTime)
       expect(this.ticker.tickTo).to.have.callCount(1)
     })

@@ -61,11 +61,11 @@ module.exports = classFactory('ActorView', function(proto){
   }
 
   proto.onMove = function(actor){
-    this.eventManager.add(this)
+    this.eventManager.addTicker(this)
   }
 
   proto.onStop = function(actor){
-    this.eventManager.remove(this)
+    this.eventManager.removeTicker(this)
   }
 
   proto.tickTo = function(targetTime){

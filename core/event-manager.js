@@ -34,12 +34,12 @@ module.exports = classFactory('EventManager', function(proto){
     }
   }
 
-  proto.add = function(ticker){
+  proto.addTicker = function(ticker){
     this._tickers[ticker] = ticker
     ticker.tickTo(this.lastTickAt)
   }
 
-  proto.remove = function(ticker){
+  proto.removeTicker = function(ticker){
     delete this._tickers[ticker]
   }
 
