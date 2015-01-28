@@ -1,40 +1,40 @@
 var expect = require('carch/test/support/chai').expect
 var sinon = require('sinon')
 
-var TickManager = require('carch/core/tick-manager')
+var EventManager = require('carch/core/event-manager')
 
-describe('TickManager', function(){
+describe('EventManager', function(){
   beforeEach(function(){
-    this.tickManager = TickManager.create()
-    this.startTime = this.tickManager.lastTickAt
+    this.eventManager = EventManager.create()
+    this.startTime = this.eventManager.lastTickAt
     this.targetTime = this.startTime + 10
     this.ticker = sinon.stub({ tickTo: function(){} })
   })
 
   describe('#add()', function(){
     it('forces tick', function(){
-      this.tickManager.add(this.ticker)
+      this.eventManager.add(this.ticker)
       expect(this.ticker.tickTo).to.have.been.calledWith(this.startTime)
     })
   })
 
   describe('#tickTo()', function(){
     it('accepts calls by default', function(){
-      this.tickManager.tickTo(this.targetTime)
+      this.eventManager.tickTo(this.targetTime)
     })
 
     it('delegates to #add() tickers', function(){
-      this.tickManager.add(this.ticker)
-      this.tickManager.tickTo(this.targetTime)
+      this.eventManager.add(this.ticker)
+      this.eventManager.tickTo(this.targetTime)
       expect(this.ticker.tickTo).to.have.been.calledWith(this.targetTime)
     })
 
     it('does not delegate to #remove() tickers', function(){
-      this.tickManager.add(this.ticker)
+      this.eventManager.add(this.ticker)
       expect(this.ticker.tickTo).to.have.callCount(1)
 
-      this.tickManager.remove(this.ticker)
-      this.tickManager.tickTo(this.targetTime)
+      this.eventManager.remove(this.ticker)
+      this.eventManager.tickTo(this.targetTime)
       expect(this.ticker.tickTo).to.have.callCount(1)
     })
 
@@ -45,23 +45,23 @@ describe('TickManager', function(){
       })
 
       it('runs upon ticking past time', function(){
-        this.tickManager.addEvent(this.targetTime, this.spy)
-        this.tickManager.tickTo(this.targetTime + 1)
+        this.eventManager.addEvent(this.targetTime, this.spy)
+        this.eventManager.tickTo(this.targetTime + 1)
         expect(this.spy).to.have.been.calledWith(this.targetTime + 1)
         expect(this.spy).to.have.callCount(1)
       })
 
       it('only runs once', function(){
-        this.tickManager.addEvent(this.targetTime, this.spy)
-        this.tickManager.tickTo(this.targetTime)
-        this.tickManager.tickTo(this.targetTime + 1)
+        this.eventManager.addEvent(this.targetTime, this.spy)
+        this.eventManager.tickTo(this.targetTime)
+        this.eventManager.tickTo(this.targetTime + 1)
         expect(this.spy).to.have.been.calledWith(this.targetTime)
         expect(this.spy).to.have.callCount(1)
       })
 
       it('does not run for ticking before time', function(){
-        this.tickManager.addEvent(this.targetTime, this.spy)
-        this.tickManager.tickTo(this.targetTime - 1)
+        this.eventManager.addEvent(this.targetTime, this.spy)
+        this.eventManager.tickTo(this.targetTime - 1)
         expect(this.spy).to.have.callCount(0)
       })
     })

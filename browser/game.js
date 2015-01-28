@@ -9,26 +9,26 @@ var classFactory = require('carch/util/class-factory')
 var time = require('carch/util/time')
 
 var Hideout = require('carch/core/hideout')
-var TickManager = require('carch/core/tick-manager')
+var EventManager = require('carch/core/event-manager')
 
 module.exports = classFactory('Game', function(proto){
   proto.init = function(options){
     options = options || {}
 
     this.hideout = options.hideout
-    this.hideout.eventManager = this.tickManager = TickManager.create()
+    this.hideout.eventManager = this.eventManager = EventManager.create()
     this.stage = new PIXI.Stage(colors.BLACK)
     this.stage.interactive = true
 
     this.hideoutView = HideoutView.create({
       hideout: this.hideout,
-      tickManager: this.tickManager,
+      eventManager: this.eventManager,
       pixiContainer: this.stage,
     })
   }
 
   proto.tickTo = function(targetTime){
-    this.tickManager.tickTo(targetTime)
+    this.eventManager.tickTo(targetTime)
   }
 
   proto.loop = function(renderer){

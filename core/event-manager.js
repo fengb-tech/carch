@@ -3,7 +3,7 @@ var Heap = require('heap')
 var classFactory = require('carch/util/class-factory')
 var time = require('carch/util/time')
 
-module.exports = classFactory('TickManager', function(proto){
+module.exports = classFactory('EventManager', function(proto){
   proto.init = function(options){
     options = options || {}
 

@@ -17,7 +17,7 @@ module.exports = classFactory('ActorView', function(proto){
   proto.init = function(options){
     options = options || {}
 
-    this.tickManager = options.tickManager
+    this.eventManager = options.eventManager
     this.displayCoord = options.displayCoord
     this.actor = options.actor
     this.textureName = options.actor.textureName || options.actor.cfName.toLowerCase()
@@ -61,11 +61,11 @@ module.exports = classFactory('ActorView', function(proto){
   }
 
   proto.onMove = function(actor){
-    this.tickManager.add(this)
+    this.eventManager.add(this)
   }
 
   proto.onStop = function(actor){
-    this.tickManager.remove(this)
+    this.eventManager.remove(this)
   }
 
   proto.tickTo = function(targetTime){

@@ -5,10 +5,11 @@ var sinon = require('sinon')
 var Coord = require('carch/core/coord')
 var Hideout = require('carch/core/hideout')
 var Minion = require('carch/core/minion')
+var EventManager = require('carch/core/event-manager')
 
 describe('Hideout', function(){
   beforeEach(function(){
-    this.hideout = Hideout.create({ width: 10, height: 10 })
+    this.hideout = Hideout.create({ width: 10, height: 10, eventManager: EventManager.create() })
     this.spy = sinon.spy()
   })
 

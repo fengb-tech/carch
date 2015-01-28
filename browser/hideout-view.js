@@ -10,7 +10,7 @@ module.exports = classFactory('HideoutView', function(proto){
   proto.init = function(options){
     options = options || {}
 
-    this.tickManager = options.tickManager
+    this.eventManager = options.eventManager
     this.hideout = options.hideout
     this.pixiContainer = this.initContainer()
     options.pixiContainer.addChild(this.pixiContainer)
@@ -68,7 +68,7 @@ module.exports = classFactory('HideoutView', function(proto){
   proto.addActorView = function(actor, coord){
     var actorView = ActorView.create({
       displayCoord: _.bind(this.displayCoord, this),
-      tickManager: this.tickManager,
+      eventManager: this.eventManager,
       actor: actor,
       coord: coord,
     })
