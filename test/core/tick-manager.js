@@ -51,7 +51,7 @@ describe('TickManager', function(){
         expect(this.spy).to.have.callCount(1)
       })
 
-      xit('only runs once', function(){
+      it('only runs once', function(){
         this.tickManager.addEvent(this.targetTime, this.spy)
         this.tickManager.tickTo(this.targetTime)
         this.tickManager.tickTo(this.targetTime + 1)

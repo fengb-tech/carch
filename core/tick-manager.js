@@ -1,3 +1,5 @@
+var Heap = require('heap')
+
 var classFactory = require('carch/util/class-factory')
 var time = require('carch/util/time')
 
@@ -7,7 +9,9 @@ module.exports = classFactory('TickManager', function(proto){
 
     this.lastTickAt = options.lastTickAt || time.now()
     this._tickers = {}
-    this._events = []
+    this._events = new Heap(function(a, b){
+      return a[0] - b[0]
+    })
   }
 
   proto.tickTo = function(targetTimestamp){
@@ -17,12 +21,15 @@ module.exports = classFactory('TickManager', function(proto){
     }
     this.lastTickAt = targetTimestamp
 
-    for(var i=0; i < this._events.length; i++){
-      var eventDirective = this._events[i]
+    while(!this._events.empty()){
+      var eventDirective = this._events.peek()
       var triggerTimestamp = eventDirective[0]
-      var event = eventDirective[1]
-      if(targetTimestamp >= triggerTimestamp){
+      if(targetTimestamp < triggerTimestamp){
+        break
+      } else {
+        var event = eventDirective[1]
         event(targetTimestamp)
+        this._events.pop()
       }
     }
   }
