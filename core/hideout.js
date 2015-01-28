@@ -12,6 +12,7 @@ module.exports = classFactory('Hideout', function(proto){
   this.inherits(events.EventEmitter)
 
   proto.init = function(options){
+    this.eventManager = options.eventManager
     this.width = options.width
     this.height = options.height
     this.dirWidth = this.width / 2
@@ -43,9 +44,10 @@ module.exports = classFactory('Hideout', function(proto){
     return actors
   }
 
-  proto.addMinion = function(){
+  proto.addMinion = function(coord){
+    coord = coord || this.origin
+
     var minion = Minion.create({ hideout: this })
-    var coord = this.origin
     this._coords[minion] = coord
     this.minions.push(minion)
     this.emit('addMinion', this, minion, coord)
@@ -84,10 +86,10 @@ module.exports = classFactory('Hideout', function(proto){
     minion.emit('move', minion, fromCoord, toCoord)
 
     var self = this
-    setTimeout(function(){
+    this.eventManager.addEvent(toTime, function(){
       minion.emit('stop', minion, fromCoord, toCoord)
       delete self._movingCoords[minion]
-    }, toTime - now + 50)
+    })
 
     return true
   }

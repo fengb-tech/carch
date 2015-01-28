@@ -14,12 +14,11 @@ function randomInterval(start, end){
 function createHideout(numMinions){
   var hideout = Hideout.create({ width: 15, height: 10 })
   for(var i = 0; i < numMinions; i++){
-    var minion = hideout.addMinion()
     var coord = Coord.create({
       x: randomInterval(-hideout.dirWidth, +hideout.dirWidth),
       y: randomInterval(-hideout.dirHeight, +hideout.dirHeight),
     })
-    hideout.moveActor(minion, coord)
+    var minion = hideout.addMinion(coord)
   }
   return hideout
 }

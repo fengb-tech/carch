@@ -15,20 +15,20 @@ module.exports = classFactory('Game', function(proto){
   proto.init = function(options){
     options = options || {}
 
-    this.hideout = options.hideout || Hideout.create()
-    this.viewTickManager = TickManager.create()
+    this.hideout = options.hideout
+    this.hideout.eventManager = this.tickManager = TickManager.create()
     this.stage = new PIXI.Stage(colors.BLACK)
     this.stage.interactive = true
 
     this.hideoutView = HideoutView.create({
       hideout: this.hideout,
-      tickManager: this.viewTickManager,
+      tickManager: this.tickManager,
       pixiContainer: this.stage,
     })
   }
 
   proto.tickTo = function(targetTime){
-    this.viewTickManager.tickTo(targetTime)
+    this.tickManager.tickTo(targetTime)
   }
 
   proto.loop = function(renderer){
