@@ -7,6 +7,7 @@ module.exports = classFactory('TickManager', function(proto){
 
     this.lastTickAt = options.lastTickAt || time.now()
     this._tickers = {}
+    this._events = []
   }
 
   proto.tickTo = function(targetTimestamp){
@@ -15,6 +16,15 @@ module.exports = classFactory('TickManager', function(proto){
       ticker.tickTo(targetTimestamp)
     }
     this.lastTickAt = targetTimestamp
+
+    for(var i=0; i < this._events.length; i++){
+      var eventDirective = this._events[i]
+      var triggerTimestamp = eventDirective[0]
+      var event = eventDirective[1]
+      if(targetTimestamp >= triggerTimestamp){
+        event(targetTimestamp)
+      }
+    }
   }
 
   proto.add = function(ticker){
@@ -24,5 +34,9 @@ module.exports = classFactory('TickManager', function(proto){
 
   proto.remove = function(ticker){
     delete this._tickers[ticker]
+  }
+
+  proto.addEvent = function(triggerTimestamp, func){
+    this._events.push([triggerTimestamp, func])
   }
 })

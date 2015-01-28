@@ -37,5 +37,33 @@ describe('TickManager', function(){
       this.tickManager.tickTo(this.targetTime)
       expect(this.ticker.tickTo).to.have.callCount(1)
     })
+
+    describe('#addEvent()', function(){
+      beforeEach(function(){
+        this.spy = sinon.spy()
+        this.targetTime = 100000
+      })
+
+      it('runs upon ticking past time', function(){
+        this.tickManager.addEvent(this.targetTime, this.spy)
+        this.tickManager.tickTo(this.targetTime + 1)
+        expect(this.spy).to.have.been.calledWith(this.targetTime + 1)
+        expect(this.spy).to.have.callCount(1)
+      })
+
+      xit('only runs once', function(){
+        this.tickManager.addEvent(this.targetTime, this.spy)
+        this.tickManager.tickTo(this.targetTime)
+        this.tickManager.tickTo(this.targetTime + 1)
+        expect(this.spy).to.have.been.calledWith(this.targetTime)
+        expect(this.spy).to.have.callCount(1)
+      })
+
+      it('does not run for ticking before time', function(){
+        this.tickManager.addEvent(this.targetTime, this.spy)
+        this.tickManager.tickTo(this.targetTime - 1)
+        expect(this.spy).to.have.callCount(0)
+      })
+    })
   })
 })
