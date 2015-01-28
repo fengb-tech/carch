@@ -31,7 +31,7 @@ exports.createGame = function(numMinions){
 exports.aiRandomWalk = function(game, interval){
   interval = interval || 700
   var last = 0
-  game.viewTickManager.add({
+  game.eventManager.addTicker({
     tickTo: function(targetTimestamp){
       if(targetTimestamp - last < interval){
         return

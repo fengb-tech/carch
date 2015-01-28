@@ -12,7 +12,7 @@ window.benchmark = function(){
   var start = time.now()
   var current
   while((current = time.now()) < start + TEN_SEC){
-    game.tickTo(current)
+    game.tickTo(ops * 16.666666666667)
     ops++
   }
 
