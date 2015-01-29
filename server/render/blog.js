@@ -1,5 +1,4 @@
 var _ = require('lodash')
-var S = require('string')
 
 var fs = require('fs')
 var path = require('path')
@@ -24,7 +23,7 @@ module.exports = function blog(options){
   function articleFromFilename(filename){
     var article = XRegExp.exec(filename, YYYY_MM_DD_ARTICLE)
     article.path = article.input
-    article.title = S(article.name).capitalize().s
+    article.title = _.capitalize(article.name)
     return article
   }
 
