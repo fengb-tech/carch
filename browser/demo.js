@@ -1,5 +1,3 @@
-var _ = require('lodash')
-
 var Coord = require('carch/core/coord')
 var Hideout = require('carch/core/hideout')
 var ResourceStation = require('carch/core/resource-station')
@@ -18,7 +16,7 @@ function createHideout(numMinions){
       x: randomInterval(-hideout.dirWidth, +hideout.dirWidth),
       y: randomInterval(-hideout.dirHeight, +hideout.dirHeight),
     })
-    var minion = hideout.addMinion(coord)
+    hideout.addMinion(coord)
   }
   return hideout
 }

@@ -42,34 +42,34 @@ time.now = function(){
   }
 }()
 
-time.ns = function ns(ns){
+time.ns = function(ns){
   return MS_PER_US * US_PER_NS * ns
 }
 
-time.µs = time.us = function µs(us){
+time.µs = time.us = function(us){
   return MS_PER_US * us
 }
 
-time.ms = function ms(ms){
+time.ms = function(ms){
   return ms
 }
 
-time.sec = function sec(sec){
+time.sec = function(sec){
   return MS_PER_SEC * sec
 }
 
-time.min = function min(min){
+time.min = function(min){
   return MS_PER_SEC * SEC_PER_MIN * min
 }
 
-time.hour = function hour(hour){
+time.hour = function(hour){
   return MS_PER_SEC * SEC_PER_MIN * MIN_PER_HOUR * hour
 }
 
-time.day = function day(day){
+time.day = function(day){
   return MS_PER_SEC * SEC_PER_MIN * MIN_PER_HOUR * HOUR_PER_DAY * day
 }
 
-time.year = function year(year){
+time.year = function(year){
   return MS_PER_SEC * SEC_PER_MIN * MIN_PER_HOUR * HOUR_PER_DAY * DAY_PER_YEAR * year
 }

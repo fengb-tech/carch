@@ -1,3 +1,5 @@
+/* globals window */
+
 var demo = require('carch/browser/demo')
 var time = require('carch/util/time')
 

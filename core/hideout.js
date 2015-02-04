@@ -1,6 +1,4 @@
-var _ = require('lodash')
 var events = require('events')
-var util = require('util')
 
 var classFactory = require('carch/util/class-factory')
 var time = require('carch/util/time')

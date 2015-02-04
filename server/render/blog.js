@@ -2,9 +2,9 @@ var _ = require('lodash')
 
 var fs = require('fs')
 var path = require('path')
-var XRegExp = require('xregexp').XRegExp
+var xRegExp = require('xregexp').XRegExp
 
-var YYYY_MM_DD_ARTICLE = XRegExp('(?<year>  [0-9]{4}) - ' +
+var YYYY_MM_DD_ARTICLE = xRegExp('(?<year>  [0-9]{4}) - ' +
                                  '(?<month> [0-9]{2}) - ' +
                                  '(?<day>   [0-9]{2}) - ' +
                                  '(?<name>  .*)', 'x')
@@ -21,7 +21,7 @@ module.exports = function blog(options){
   }
 
   function articleFromFilename(filename){
-    var article = XRegExp.exec(filename, YYYY_MM_DD_ARTICLE)
+    var article = xRegExp.exec(filename, YYYY_MM_DD_ARTICLE)
     article.path = article.input
     article.title = _.capitalize(article.name)
     return article
@@ -39,7 +39,7 @@ module.exports = function blog(options){
   }
 
   return function blog(req, res, next){
-    if(req.method != 'GET' && req.method != 'HEAD') {
+    if(req.method !== 'GET' && req.method !== 'HEAD') {
       return next()
     }
 

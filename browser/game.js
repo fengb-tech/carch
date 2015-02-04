@@ -1,4 +1,4 @@
-/* globals performance */
+/* globals performance, requestAnimationFrame */
 
 var PIXI = require('pixi.js')
 
@@ -8,7 +8,6 @@ var HideoutView = require('carch/browser/hideout-view')
 var classFactory = require('carch/util/class-factory')
 var time = require('carch/util/time')
 
-var Hideout = require('carch/core/hideout')
 var EventManager = require('carch/core/event-manager')
 
 module.exports = classFactory('Game', function(proto){

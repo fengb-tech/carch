@@ -1,7 +1,6 @@
 var events = require('events')
 
 var classFactory = require('carch/util/class-factory')
-var time = require('carch/util/time')
 
 var MinionResources = require('carch/core/minion-resources')
 

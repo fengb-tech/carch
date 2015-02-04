@@ -5,7 +5,7 @@ function nextCfId(){
   return cfId++
 }
 
-var classFactory = module.exports = function(cfName, callback){
+module.exports = function classFactory(cfName, callback){
   var Class = function(){
     this.cfId = nextCfId()
   }
@@ -42,7 +42,7 @@ var classFactory = module.exports = function(cfName, callback){
     var keys = Object.keys(this)
     for(var i = 0; i < keys.length; i++){
       var key = keys[i]
-      if(key != 'cfId'){
+      if(key !== 'cfId'){
         delete this[key]
       }
     }

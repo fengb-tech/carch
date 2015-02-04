@@ -4,7 +4,7 @@ var mocha = require('gulp-mocha')
 
 var paths = {
   lint: [
-    '*.js', '*.json',
+    '.jshintrc', '*.js', '*.json',
     'browser/**/*.js',
     'core/**/*.js',
     'util/**/*.js',

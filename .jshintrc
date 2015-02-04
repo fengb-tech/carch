@@ -1,7 +1,19 @@
 {
+  "camelcase": true,
+  "curly": true,
+  "eqeqeq": true,
+  "freeze": true,
+  "indent": 2,
+  "newcap": true,
+  "noempty": true,
+  "nonbsp": true,
+  "undef": true,
+  "unused": "vars",
+
   "asi": true,
-  "browser": true,
-  "node": true,
+  "eqnull": true,
+
+  "browserify": true,
   "mocha": true,
-  "undef": true
+  "node": true
 }

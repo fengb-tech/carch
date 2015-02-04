@@ -1,9 +1,7 @@
-/* globals document, window */
+/* globals document, window, requestAnimationFrame */
 
 var PIXI = require('pixi.js')
 var _ = require('lodash')
-
-var time = require('carch/util/time')
 
 var demo = require('carch/browser/demo')
 

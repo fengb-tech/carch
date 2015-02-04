@@ -3,7 +3,6 @@ var PIXI = require('pixi.js')
 var events = require('events')
 
 var classFactory = require('carch/util/class-factory')
-var time = require('carch/util/time')
 
 var colors = require('carch/browser/colors')
 
@@ -60,11 +59,11 @@ module.exports = classFactory('ActorView', function(proto){
     this.sprite.addChild(box)
   }
 
-  proto.onMove = function(actor){
+  proto.onMove = function(_){
     this.eventManager.addTicker(this)
   }
 
-  proto.onStop = function(actor){
+  proto.onStop = function(_){
     this.eventManager.removeTicker(this)
   }
 
