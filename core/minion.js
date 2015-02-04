@@ -3,26 +3,20 @@ var events = require('events')
 var classFactory = require('carch/util/class-factory')
 var time = require('carch/util/time')
 
+var MinionResources = require('carch/core/minion-resources')
+
 module.exports = classFactory('Minion', function(proto){
   this.inherits(events.EventEmitter)
 
   proto.init = function(options){
     options = options || {}
     this.hideout = options.hideout
-    this.energy = options.energy || 100
-    this.satiety = options.satiety || 100
-    this.lastTick = options.lastTick || time.now()
+
+    this.resources = MinionResources.create()
   }
 
   proto.tickTo = function(targetTime){
-    if(targetTime <= this.lastTick){
-      return
-    }
-
-    var diff = targetTime - this.lastTick
-    this.energy -= diff / time.hour(1) * 100
-    this.satiety -= diff / time.min(15) * 100
-    this.lastTick = targetTime
+    this.resources.tickTo(targetTime)
   }
 
   proto.coord = function(targetTime){
