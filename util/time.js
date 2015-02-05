@@ -1,5 +1,7 @@
 /* globals performance */
 
+var _ = require('lodash')
+
 var NS_PER_US    = 1000
 var US_PER_MS    = 1000
 var MS_PER_SEC   = 1000
@@ -19,28 +21,29 @@ var time = module.exports = function(options){
   return val
 }
 
-time.now = function(){
+time.now = (function(){
   // Offsets based on UTC timestamp for synchronization reasons.
-  var baseTime
-  if(typeof performance === 'object' && typeof performance.now === 'function'){
-    var perf = performance
-    baseTime = Date.now() - perf.now()
+  var baseTime = Date.now()
+
+  if(global.performance && _.isFunction(performance.now)){
+    baseTime -= performance.now()
 
     return function now(){
-      return baseTime + perf.now()
+      return baseTime + performance.now()
     }
-  } else if(typeof process === 'object' && typeof process.hrtime === 'function'){
+  }
+
+  if(global.process && _.isFunction(process.hrtime)){
     var baseHrt = process.hrtime()
-    baseTime = Date.now()
 
     return function now(){
       var hrt = process.hrtime(baseHrt)
       return baseTime + time({ sec: hrt[0], ns: hrt[1] })
     }
-  } else {
-    return Date.now
   }
-}()
+
+  return Date.now
+})()
 
 time.ns = function(ns){
   return MS_PER_US * US_PER_NS * ns
