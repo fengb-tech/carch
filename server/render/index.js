@@ -1,7 +1,7 @@
 var _ = require('lodash')
 
 var fs = require('fs')
-var markdown = require('marked')
+var markdown = require('markdown-it')()
 var browserify = require('browserify-middleware')
 
 var stylish = require('stylish')
@@ -24,7 +24,7 @@ exports.markdownFile = function(filename, options){
   return function(req, res){
     fs.readFile(filename, function(err, file){
       res.render(view, _.defaults(options, {
-        content: markdown(file.toString()),
+        content: markdown.render(file.toString()),
       }))
     })
   }
