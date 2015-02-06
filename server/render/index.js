@@ -1,5 +1,4 @@
 var _ = require('lodash')
-var slug = require('slug')
 
 var fs = require('fs')
 var markdown = require('marked')
@@ -13,7 +12,7 @@ var blog = require('./blog')
 exports.template = function(view){
   return function(req, res){
     res.render(view, {
-      bodyClass: 'p-' + slug(view)
+      bodyClass: 'p-' + _.kebabCase(view)
     })
   }
 }
