@@ -11,7 +11,7 @@ module.exports = classFactory('Minion', function(proto){
     options = options || {}
     this.hideout = options.hideout
 
-    this.resources = MinionResources.create()
+    this.resources = MinionResources.create({ eventManager: this.hideout.eventManager, minion: this })
   }
 
   proto.tickTo = function(targetTime){

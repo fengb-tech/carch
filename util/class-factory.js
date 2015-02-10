@@ -26,7 +26,7 @@ module.exports = function classFactory(cfName, callback){
 
   Class.superInits = []
   Class.inherits = function(Super, superInit){
-    superInit = superInit || Super
+    superInit = superInit || Super.prototype.init || Super
 
     Class.superInits.push(superInit)
 

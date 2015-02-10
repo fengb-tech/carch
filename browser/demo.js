@@ -79,3 +79,16 @@ exports.musicalChairsGame = function(){
   }, 1000)
   return Game.create({ hideout: hideout })
 }
+
+exports.basicGame = function(){
+  var hideout = createHideout()
+  var game = Game.create({ hideout: hideout })
+  var minion = hideout.addMinion()
+  var food = ResourceStation.create({ type: 'food' })
+  hideout.addResourceStation(food, Coord.create({ x: 4, y: -3 }))
+  var energy = ResourceStation.create({ type: 'energy' })
+  hideout.addResourceStation(energy, Coord.create({ x: -4, y: -3 }))
+  minion.resources.energy = 25
+  minion.resources.queueNextAction()
+  return game
+}

@@ -5,9 +5,11 @@ var time = require('carch/util/time')
 
 var Coord = require('carch/core/coord')
 var Minion = require('carch/core/minion')
+var WorkDispatch = require('carch/core/work-dispatch')
 
 module.exports = classFactory('Hideout', function(proto){
   this.inherits(events.EventEmitter)
+  this.inherits(WorkDispatch)
 
   proto.init = function(options){
     this.eventManager = options.eventManager

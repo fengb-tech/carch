@@ -15,6 +15,7 @@ module.exports = classFactory('MinionResources', function(proto){
   proto.init = function(options){
     options = options || {}
     this.eventManager = options.eventManager
+    this.minion = options.minion
     this.lastTick = options.lastTick || time.now()
 
     for(var i = 0; i < RESOURCES.length; i++){
@@ -45,8 +46,12 @@ module.exports = classFactory('MinionResources', function(proto){
       shortest = Math.min(shortest, timeLeft)
     }
     var self = this
-    this.eventManager.addEvent(this.lastTick + shortest, function(){
-      self.emit('next')
+    this.eventManager.addEvent(this.lastTick + shortest, function(timestamp){
+      self.emit('next', timestamp, self.minion)
     })
+  }
+
+  proto.next = function(){
+    return 'energy'
   }
 })

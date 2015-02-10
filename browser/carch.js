@@ -13,7 +13,7 @@ window.addEventListener('resize', _.debounce(function(){
   renderer.resize(parentDom.clientWidth, parentDom.clientHeight)
 }, 200))
 
-var game = demo.musicalChairsGame(10)
+var game = window.game = demo.basicGame()
 game.loop(renderer)
 
 var fpsDisplay = document.getElementById('fps')
