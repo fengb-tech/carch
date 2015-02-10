@@ -22,6 +22,9 @@ module.exports = classFactory('HideoutView', function(proto){
     this.hideout.actors(function(actor){
       self.addActorView(actor, self.hideout.coordOf(actor))
     })
+    this.hideout.on('addResourceStation', function(hideout, resourceStation, coord){
+      self.addActorView(resourceStation, coord)
+    })
   }
 
   proto.initContainer = function(){
