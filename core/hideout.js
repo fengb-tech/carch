@@ -9,10 +9,11 @@ var WorkDispatch = require('carch/core/work-dispatch')
 
 module.exports = classFactory('Hideout', function(proto){
   this.inherits(events.EventEmitter)
-  this.inherits(WorkDispatch)
 
   proto.init = function(options){
     this.eventManager = options.eventManager
+    this.workDispatch = WorkDispatch.create({ hideout: this })
+
     this.width = options.width
     this.height = options.height
     this.dirWidth = this.width / 2

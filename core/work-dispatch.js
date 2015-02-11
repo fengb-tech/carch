@@ -2,20 +2,23 @@ var _ = require('lodash')
 
 var classFactory = require('carch/util/class-factory')
 
-var WorkDispatch = module.exports = function(options){
-  this.on('addMinion', _.bind(this.onAddMinion, this))
-}
-
-WorkDispatch.prototype.onAddMinion = function(hideout, minion, coord){
-  minion.resources.on('next', _.bind(this.onNextResource, this))
-}
-
-WorkDispatch.prototype.onNextResource = function(timestamp, minion){
-  var resource = minion.resources.next()
-  if(!resource) {
-    return
+module.exports = classFactory('WorkDispatch', function(proto){
+  proto.init = function(options){
+    this.hideout = options.hideout
+    this.hideout.on('addMinion', _.bind(this.onAddMinion, this))
   }
 
-  var targetCoord = this.nearestResourceStationCoordTo(resource, minion.coord())
-  this.moveActor(minion, targetCoord)
-}
+  proto.onAddMinion = function(hideout, minion, coord){
+    minion.resources.on('next', _.bind(this.onNextResource, this))
+  }
+
+  proto.onNextResource = function(timestamp, minion){
+    var resource = minion.resources.next()
+    if(!resource) {
+      return
+    }
+
+    var targetCoord = this.hideout.nearestResourceStationCoordTo(resource, minion.coord())
+    this.hideout.moveActor(minion, targetCoord)
+  }
+})

@@ -57,7 +57,7 @@ module.exports = function classFactory(cfName, callback){
     }
   }
   proto.toString = function(){
-    return '<' + Class.cfName + '-' + this.cfId + '>'
+    return '<' + this.constructor.cfName + '-' + this.cfId + '>'
   }
 
   callback.call(Class, proto)
